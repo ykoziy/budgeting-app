@@ -10,7 +10,7 @@ class IncomeList extends BudgetList {
   }
 
   getByIndex(index) {
-    return this.items['income'][index];
+    return super.getByCategoryIndex('income', index);
   }
 }
 
