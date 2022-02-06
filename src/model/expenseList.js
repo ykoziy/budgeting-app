@@ -1,23 +1,13 @@
-class ExpenseList {
+import BudgetList from './budgetList';
+
+class ExpenseList extends BudgetList {
   constructor() {
-    this.expenses = {};
-  }
-
-  add(expense, category = 'other') {
-    if (!this.expenses.hasOwnProperty(category)) {
-      this.expenses[category] = [expense];
-    } else {
-      this.expenses[category].push(expense);
-    }
-  }
-
-  getExpenses() {
-    return this.expenses;
+    super();
   }
 
   sumCategory(category) {
-    if (this.expenses.hasOwnProperty(category)) {
-      const expensesArray = this.expenses[category];
+    if (this.items.hasOwnProperty(category)) {
+      const expensesArray = this.items[category];
       let sum = 0;
       expensesArray.forEach((expense) => {
         sum += expense.cost;
@@ -29,8 +19,8 @@ class ExpenseList {
   }
 
   deleteCategory(category) {
-    if (this.expenses.hasOwnProperty(category)) {
-      delete this.expenses[category];
+    if (this.items.hasOwnProperty(category)) {
+      delete this.items[category];
       return true;
     } else {
       return false;

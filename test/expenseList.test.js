@@ -10,7 +10,7 @@ describe('Testing ExpenseList class', () => {
     expenses.add(expenseA);
     expenses.add(expenseB);
 
-    expect(expenses.getExpenses()['other'].length).toEqual(2);
+    expect(expenses.get()['other'].length).toEqual(2);
   });
 
   it('sum of non existing category should be 0', () => {
@@ -33,8 +33,8 @@ describe('Testing ExpenseList class', () => {
     expenses.add(expenseB);
     expenses.add(expenseC, 'fun');
 
-    expect(expenses.getExpenses()['other'].length).toEqual(2);
-    expect(expenses.getExpenses()['fun'].length).toEqual(1);
+    expect(expenses.get()['other'].length).toEqual(2);
+    expect(expenses.get()['fun'].length).toEqual(1);
     expect(expenses.sumCategory('other')).toEqual(595.88);
     expect(expenses.sumCategory('fun')).toEqual(250.45);
   });
@@ -61,6 +61,6 @@ describe('Testing ExpenseList class', () => {
     expenses.add(expenseC, 'fun');
 
     expect(expenses.deleteCategory('other')).toBe(true);
-    expect(Object.keys(expenses.getExpenses()).length).toEqual(1);
+    expect(Object.keys(expenses.get()).length).toEqual(1);
   });
 });
