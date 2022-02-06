@@ -37,6 +37,17 @@ class BudgetList {
     }
     return false;
   }
+
+  deleteCategoryIndex(category, index) {
+    if (this.items.hasOwnProperty(category)) {
+      let categoryLength = this.items[category].length;
+      if (index >= 0 && index < categoryLength) {
+        this.items[category].splice(index, 1);
+        return true;
+      }
+    }
+    return false;
+  }
 }
 
 export default BudgetList;
