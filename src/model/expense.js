@@ -1,6 +1,8 @@
-class Expense {
+import BudgetItem from './budgetitem';
+
+class Expense extends BudgetItem {
   constructor(title, cost) {
-    this.title = title;
+    super(title);
     this.cost = cost;
   }
 }
