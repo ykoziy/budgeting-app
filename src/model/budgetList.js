@@ -14,6 +14,16 @@ class BudgetList {
   get() {
     return this.items;
   }
+
+  sum() {
+    let sum = 0;
+    for (const key in this.items) {
+      this.items[key].forEach((element) => {
+        sum += element.money;
+      });
+    }
+    return Number(sum.toFixed(2));
+  }
 }
 
 export default BudgetList;
