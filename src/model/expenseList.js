@@ -1,4 +1,4 @@
-class ExnepseList {
+class ExpenseList {
   constructor() {
     this.expenses = {};
   }
@@ -38,4 +38,4 @@ class ExnepseList {
   }
 }
 
-export default ExnepseList;
+export default ExpenseList;
