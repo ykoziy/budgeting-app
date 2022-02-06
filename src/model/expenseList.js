@@ -26,10 +26,6 @@ class ExpenseList extends BudgetList {
       return false;
     }
   }
-
-  getByCategoryIndex(category, index) {
-    return this.items[category][index];
-  }
 }
 
 export default ExpenseList;

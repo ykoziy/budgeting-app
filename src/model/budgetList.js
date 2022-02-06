@@ -15,6 +15,10 @@ class BudgetList {
     return this.items;
   }
 
+  getByCategoryIndex(category, index) {
+    return this.items[category][index];
+  }
+
   sum() {
     let sum = 0;
     for (const key in this.items) {
