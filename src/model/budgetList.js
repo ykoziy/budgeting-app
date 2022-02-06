@@ -24,6 +24,19 @@ class BudgetList {
     }
     return Number(sum.toFixed(2));
   }
+
+  delete(itemTitle) {
+    for (const key in this.items) {
+      const array = this.items[key];
+      for (let i = 0; i < array.length; i++) {
+        if ((array[i].title = itemTitle)) {
+          this.items[key].splice(i, 1);
+          return true;
+        }
+      }
+    }
+    return false;
+  }
 }
 
 export default BudgetList;
