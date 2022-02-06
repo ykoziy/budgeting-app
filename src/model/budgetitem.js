@@ -1,6 +1,7 @@
 class BudgetItem {
-  constructor(title) {
+  constructor(title, money) {
     this.title = title;
+    this.money = money;
   }
 }
 

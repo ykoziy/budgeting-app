@@ -10,7 +10,7 @@ class ExpenseList extends BudgetList {
       const expensesArray = this.items[category];
       let sum = 0;
       expensesArray.forEach((expense) => {
-        sum += expense.cost;
+        sum += expense.money;
       });
       return sum;
     } else {
