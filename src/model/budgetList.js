@@ -57,6 +57,17 @@ class BudgetList {
     }
   }
 
+  renameCategory(oldName, newName) {
+    if (this.items.hasOwnProperty(oldName)) {
+      if (newName !== oldName) {
+        this.items[newName] = this.items[oldName];
+        delete this.items[oldName];
+        return true;
+      }
+    }
+    return false;
+  }
+
   deleteCategoryIndex(category, index) {
     if (this.items.hasOwnProperty(category)) {
       let categoryLength = this.items[category].length;
