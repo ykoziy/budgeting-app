@@ -26,10 +26,14 @@ describe('Testing the Model', () => {
   it('should be able to edit an expense without a category', () => {
     model.addExpense('internet', 76.98);
     const newCost = 95.78;
-    model.editExpense(undefined, 0, { money: newCost });
+    const newTitle = 'nope';
+    model.editExpense(undefined, 0, { money: newCost, description: newTitle });
 
     expect(model.expenses.getByCategoryIndex('other', 0).money).toEqual(
       newCost,
+    );
+    expect(model.expenses.getByCategoryIndex('other', 0).title).toEqual(
+      newTitle,
     );
   });
 
