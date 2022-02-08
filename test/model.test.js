@@ -26,7 +26,7 @@ describe('Testing the Model', () => {
   it('should be able to edit an expense without a category', () => {
     model.addExpense('internet', 76.98);
     const newCost = 95.78;
-    model.editExpense(undefined, 0, { cost: newCost });
+    model.editExpense(undefined, 0, { money: newCost });
 
     expect(model.expenses.getByCategoryIndex('other', 0).money).toEqual(
       newCost,
@@ -36,7 +36,7 @@ describe('Testing the Model', () => {
   it('should be able to edit an expense with a category', () => {
     model.addExpense('water', 45.12, 'utilities');
     const newCost = 63.45;
-    model.editExpense('utilities', 0, { cost: 63.45 });
+    model.editExpense('utilities', 0, { money: 63.45 });
     expect(model.expenses.getByCategoryIndex('utilities', 0).money).toEqual(
       newCost,
     );
@@ -45,7 +45,7 @@ describe('Testing the Model', () => {
   it('should be able to edit an income', () => {
     model.addIncome('full-time job', 32500);
     const newIncome = 42100;
-    model.editIncome(0, { income: newIncome });
+    model.editIncome(0, { money: newIncome });
     expect(model.incomes.getByIndex(0).money).toEqual(newIncome);
   });
 
