@@ -12,7 +12,7 @@ class ExpenseList extends BudgetList {
       expensesArray.forEach((expense) => {
         sum += expense.money;
       });
-      return sum;
+      return Number(sum.toFixed(2));
     } else {
       return 0;
     }

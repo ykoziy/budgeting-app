@@ -24,8 +24,6 @@ class Model {
   editIncome(index, newData) {}
 
   renameCategory(oldName, newName) {}
-
-  //TODO: (fix rounding sum category)
 }
 
 export default Model;
