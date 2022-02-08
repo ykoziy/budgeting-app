@@ -18,6 +18,7 @@ class Model {
     const expense = new Expense(description, amount);
     this.expenses.add(expense, category);
   }
+  // TODO: edit income/expense, edit category name (fix rounding sum category)
 }
 
 export default Model;
