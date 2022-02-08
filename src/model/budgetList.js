@@ -42,6 +42,21 @@ class BudgetList {
     return false;
   }
 
+  edit(category, index, newData) {
+    if (this.items.hasOwnProperty(category)) {
+      let item = this.items[category][index];
+      if (newData.hasOwnProperty('description')) {
+        item.title = newData.description;
+      }
+      if (newData.hasOwnProperty('money')) {
+        item.money = newData.money;
+      }
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   deleteCategoryIndex(category, index) {
     if (this.items.hasOwnProperty(category)) {
       let categoryLength = this.items[category].length;

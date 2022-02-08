@@ -19,7 +19,9 @@ class Model {
     this.expenses.add(expense, category);
   }
 
-  editExpense(category = 'other', index, newData) {}
+  editExpense(category = 'other', index, newData) {
+    this.expenses.edit(category, index, newData);
+  }
 
   editIncome(index, newData) {}
 
