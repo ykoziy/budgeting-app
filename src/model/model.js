@@ -23,7 +23,9 @@ class Model {
     this.expenses.edit(category, index, newData);
   }
 
-  editIncome(index, newData) {}
+  editIncome(index, newData) {
+    this.incomes.edit('income', index, newData);
+  }
 
   renameCategory(oldName, newName) {}
 }
