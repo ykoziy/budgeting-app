@@ -63,6 +63,34 @@ class View {
     const el = document.querySelector(selector);
     return el;
   }
+
+  displayExpenses(expenses) {
+    //remove the existing display items
+    // maybe show something when empty???
+    // loop over data and display it.....
+    console.log('clicked expense nav, displaying expenses');
+  }
+
+  displayIncomes(incomes) {
+    //remove the existing display items
+    // maybe show something when empty???
+    // loop over data and display it.....
+    console.log('clicked expense nav, displaying incomes');
+  }
+
+  // Set event listeners
+
+  setIncomeNav(handlerFunc) {
+    this.incomeNav.addEventListener('click', (evt) => {
+      handlerFunc();
+    });
+  }
+
+  setExpenseNav(handlerFunc) {
+    this.expensesNav.addEventListener('click', (evt) => {
+      handlerFunc();
+    });
+  }
 }
 
 export default View;
