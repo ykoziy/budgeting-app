@@ -73,6 +73,24 @@ main {
   }
 }
 
+#budget-list {
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 35px;
+    border-bottom: 2px solid black;
+  }
+
+  li:hover {
+    border-bottom: 2px solid green;
+  }
+}
+
 #right-panel {
   flex-grow: 2;
+}
+
+.active {
+  text-decoration: underline;
 }
