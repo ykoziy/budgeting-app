@@ -7,6 +7,24 @@ class Model {
   constructor() {
     this.expenses = new ExpenseList();
     this.incomes = new IncomeList();
+
+    //Test data
+    //expenses
+    const exp1 = new Expense('Water', 65.32);
+    const exp2 = new Expense('Gas', 100.45);
+    const exp3 = new Expense('Electricity', 235.67);
+    const exp4 = new Expense('Internet', 76.98);
+    const exp5 = new Expense('Fun', 200.56);
+
+    this.expenses.add(exp1, 'Utilities');
+    this.expenses.add(exp2, 'Utilities');
+    this.expenses.add(exp3, 'Utilities');
+    this.expenses.add(exp4, 'Utilities');
+    this.expenses.add(exp5);
+
+    //income
+    const inc1 = new Income('Full-time job', 2917);
+    this.incomes.add(inc1);
   }
 
   addIncome(description, amount) {
