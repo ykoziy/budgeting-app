@@ -42,10 +42,9 @@ class View {
     this.budgetData.append(this.budgetList);
 
     //left panel footer
-    const leftPanelFooter = this.#createElement('footer');
-    leftPanelFooter.innerText = 'footer related to the top nav button';
+    this.leftPanelFooter = this.#createElement('footer');
 
-    this.controlPanel.append(navElement, this.budgetData, leftPanelFooter);
+    this.controlPanel.append(navElement, this.budgetData, this.leftPanelFooter);
   }
 
   #createElement(tag, className, id) {
@@ -82,6 +81,7 @@ class View {
       listItem.append(categoryText, categorySum);
       this.budgetList.append(listItem);
     }
+    this.#setFooter('Total Expenses:', expenses.sum());
   }
 
   displayIncomes(incomes) {
@@ -102,6 +102,7 @@ class View {
       listItem.append(categoryText, incomeText);
       this.budgetList.append(listItem);
     });
+    this.#setFooter('Total Income:', incomes.sum());
   }
 
   #setActiveNav(activeNav) {
@@ -112,6 +113,15 @@ class View {
       this.expensesNav.classList.remove('active');
       this.incomeNav.classList.add('active');
     }
+  }
+
+  #setFooter(text, money) {
+    this.leftPanelFooter.innerHTML = '';
+    const description = this.#createElement('p');
+    description.innerText = text;
+    const total = this.#createElement('p');
+    total.innerText = `$${money}`;
+    this.leftPanelFooter.append(description, total);
   }
 
   // Set event listeners
