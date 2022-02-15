@@ -83,10 +83,22 @@ class View {
   }
 
   displayIncomes(incomes) {
-    //remove the existing display items
+    while (this.budgetList.firstChild) {
+      this.budgetList.removeChild(this.budgetList.firstChild);
+    }
     // maybe show something when empty???
-    // loop over data and display it.....
-    console.log('clicked expense nav, displaying incomes');
+    const incomeArray = incomes.get()['income'];
+    incomeArray.forEach((income) => {
+      const listItem = this.#createElement('li');
+      const categoryText = this.#createElement('p', 'income-name');
+      categoryText.innerText = income.title;
+
+      const incomeText = this.#createElement('p', 'income-amount');
+      incomeText.innerText = `$${income.money}`;
+
+      listItem.append(categoryText, incomeText);
+      this.budgetList.append(listItem);
+    });
   }
 
   // Set event listeners
