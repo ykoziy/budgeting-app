@@ -5,6 +5,8 @@ class Controller {
 
     this.view.setIncomeNav(this.handleIncomeNav);
     this.view.setExpenseNav(this.handleExpenseNav);
+
+    this.view.displayExpenses(this.model.expenses);
   }
 
   // links model and view
