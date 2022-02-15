@@ -38,7 +38,8 @@ class View {
 
     //left panel data
     this.budgetData = this.#createElement('section');
-    this.budgetData.innerText = 'data related to the top nav button....';
+    this.budgetList = this.#createElement('ul', undefined, 'budget-list');
+    this.budgetData.append(this.budgetList);
 
     //left panel footer
     const leftPanelFooter = this.#createElement('footer');
