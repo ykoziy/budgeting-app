@@ -30,7 +30,7 @@ class View {
 
     //left panel navigation
     const navElement = this.#createElement('nav');
-    this.expensesNav = this.#createElement('div', 'nav-btn');
+    this.expensesNav = this.#createElement('div', 'nav-btn active');
     this.expensesNav.innerText = 'Expenses';
     this.incomeNav = this.#createElement('div', 'nav-btn');
     this.incomeNav.innerText = 'Income';
@@ -51,7 +51,8 @@ class View {
   #createElement(tag, className, id) {
     const el = document.createElement(tag);
     if (className) {
-      el.classList.add(className);
+      const classes = className.split(' ');
+      el.classList.add(...classes);
     }
 
     if (id) {
