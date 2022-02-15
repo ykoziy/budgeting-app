@@ -67,6 +67,7 @@ class View {
   }
 
   displayExpenses(expenses) {
+    this.#setActiveNav(1);
     while (this.budgetList.firstChild) {
       this.budgetList.removeChild(this.budgetList.firstChild);
     }
@@ -84,6 +85,7 @@ class View {
   }
 
   displayIncomes(incomes) {
+    this.#setActiveNav(2);
     while (this.budgetList.firstChild) {
       this.budgetList.removeChild(this.budgetList.firstChild);
     }
@@ -100,6 +102,16 @@ class View {
       listItem.append(categoryText, incomeText);
       this.budgetList.append(listItem);
     });
+  }
+
+  #setActiveNav(activeNav) {
+    if (activeNav === 1) {
+      this.expensesNav.classList.add('active');
+      this.incomeNav.classList.remove('active');
+    } else if (activeNav === 2) {
+      this.expensesNav.classList.remove('active');
+      this.incomeNav.classList.add('active');
+    }
   }
 
   // Set event listeners
