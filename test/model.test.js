@@ -1,9 +1,13 @@
 import Model from '../src/model/model';
+import ExpenseList from '../src/model/expenseList';
+import IncomeList from '../src/model/incomeList';
 
 describe('Testing the Model', () => {
   let model;
   beforeEach(() => {
     model = new Model();
+    model.expenses = new ExpenseList();
+    model.incomes = new IncomeList();
   });
 
   it('should be able to add an income', () => {
