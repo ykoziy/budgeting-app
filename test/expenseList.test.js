@@ -110,4 +110,17 @@ describe('Testing ExpenseList class', () => {
     expect(expenses.get()['other'].length).toEqual(1);
     expect(expenses.get()['other'][0]).toBe(expenseB);
   });
+
+  it('should return category items', () => {
+    const expenseA = new Expense('gas', 35.78);
+    const expenseB = new Expense('food', 560.1);
+
+    const expenses = new ExpenseList();
+    expenses.add(expenseA);
+    expenses.add(expenseB);
+
+    expect(expenses.getCategoryItems('other').length).toBe(2);
+    expect(expenses.getCategoryItems('other')[0]).toBe(expenseA);
+    expect(expenses.getCategoryItems('other')[1]).toBe(expenseB);
+  });
 });

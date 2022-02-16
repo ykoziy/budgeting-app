@@ -15,6 +15,10 @@ class BudgetList {
     return this.items;
   }
 
+  getCategoryItems(category) {
+    return this.items[category];
+  }
+
   getByCategoryIndex(category, index) {
     return this.items[category][index];
   }
