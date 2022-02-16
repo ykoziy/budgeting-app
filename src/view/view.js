@@ -105,6 +105,27 @@ class View {
     this.#setFooter('Total Income:', incomes.sum());
   }
 
+  openCategory(categoryName, expenses) {
+    //console.log(expenses.getCategoryItems(categoryName));
+    while (this.budgetList.firstChild) {
+      this.budgetList.removeChild(this.budgetList.firstChild);
+    }
+
+    const items = expenses.getCategoryItems(categoryName);
+    items.forEach((item) => {
+      const listItem = this.#createElement('li');
+      const categoryText = this.#createElement('p', 'income-name');
+      categoryText.innerText = item.title;
+
+      const incomeText = this.#createElement('p', 'income-amount');
+      incomeText.innerText = `$${item.money}`;
+
+      listItem.append(categoryText, incomeText);
+      this.budgetList.append(listItem);
+    });
+    this.#setFooter('Total:', expenses.sumCategory(categoryName));
+  }
+
   #setActiveNav(activeNav) {
     if (activeNav === 1) {
       this.expensesNav.classList.add('active');
@@ -135,6 +156,17 @@ class View {
   setExpenseNav(handlerFunc) {
     this.expensesNav.addEventListener('click', (evt) => {
       handlerFunc();
+    });
+  }
+
+  setCategoryOpen(handlerFunc) {
+    const listItems = Array.from(this.budgetList.childNodes);
+    listItems.forEach((listItem) => {
+      listItem.addEventListener('click', (evt) => {
+        const categoryName =
+          evt.currentTarget.querySelector('.category-name').innerHTML;
+        handlerFunc(categoryName);
+      });
     });
   }
 }

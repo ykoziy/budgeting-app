@@ -7,6 +7,8 @@ class Controller {
     this.view.setExpenseNav(this.handleExpenseNav);
 
     this.view.displayExpenses(this.model.expenses);
+
+    this.view.setCategoryOpen(this.handleCategoryOpen);
   }
 
   // links model and view
@@ -18,6 +20,11 @@ class Controller {
 
   handleExpenseNav = () => {
     this.view.displayExpenses(this.model.expenses);
+    this.view.setCategoryOpen(this.handleCategoryOpen);
+  };
+
+  handleCategoryOpen = (categoryName) => {
+    this.view.openCategory(categoryName, this.model.expenses);
   };
 }
 
