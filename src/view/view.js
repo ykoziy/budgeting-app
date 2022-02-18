@@ -1,3 +1,5 @@
+import PieChart from './piechart';
+
 class View {
   constructor() {
     //create header
@@ -103,6 +105,13 @@ class View {
       this.budgetList.append(listItem);
     });
     this.#setFooter('Total Income:', incomes.sum());
+  }
+
+  displayChart(expenses, incomes) {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    this.chartPanel.append(svg);
+    const chart = new PieChart(this.chartPanel, expenses);
+    chart.show();
   }
 
   openCategory(categoryName, expenses) {

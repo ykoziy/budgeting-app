@@ -7,6 +7,7 @@ class Controller {
     this.view.setExpenseNav(this.handleExpenseNav);
 
     this.view.displayExpenses(this.model.expenses);
+    this.view.displayChart(this.model.expenses, this.model.incomes);
 
     this.view.setCategoryOpen(this.handleCategoryOpen);
   }
