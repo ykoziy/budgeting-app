@@ -88,7 +88,10 @@ main {
 }
 
 #right-panel {
-  flex-grow: 2;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .active {
