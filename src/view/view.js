@@ -14,7 +14,13 @@ class View {
     //create right panel (graph holder)
     this.chartPanel = this.#createElement('section', undefined, 'right-panel');
 
-    mainElement.append(this.controlPanel, this.chartPanel);
+    const modalContainer = this.#createElement(
+      'div',
+      undefined,
+      'modal-container',
+    );
+
+    mainElement.append(this.controlPanel, this.chartPanel, modalContainer);
 
     //create footer
     const footerElement = this.#createElement('footer');
