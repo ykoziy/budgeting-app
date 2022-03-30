@@ -1,20 +1,21 @@
 import PieChart from './piechart';
+import DOM from './domutil';
 
 class View {
   constructor() {
     //create header
-    const headerElement = this.#createElement('header');
-    const headerText = this.#createElement('h1');
+    const headerElement = DOM.createElement('header');
+    const headerText = DOM.createElement('h1');
     headerText.innerText = 'App Header Goes Here';
     headerElement.appendChild(headerText);
 
     //create main
-    const mainElement = this.#createElement('main');
+    const mainElement = DOM.createElement('main');
     this.#buildMainPanel();
     //create right panel (graph holder)
-    this.chartPanel = this.#createElement('section', undefined, 'right-panel');
+    this.chartPanel = DOM.createElement('section', undefined, 'right-panel');
 
-    const modalContainer = this.#createElement(
+    const modalContainer = DOM.createElement(
       'div',
       undefined,
       'modal-container',
@@ -23,8 +24,8 @@ class View {
     mainElement.append(this.controlPanel, this.chartPanel, modalContainer);
 
     //create footer
-    const footerElement = this.#createElement('footer');
-    const footerText = this.#createElement('h2');
+    const footerElement = DOM.createElement('footer');
+    const footerText = DOM.createElement('h2');
     footerText.innerText = 'footer.....';
     footerElement.appendChild(footerText);
 
@@ -34,43 +35,25 @@ class View {
 
   #buildMainPanel() {
     //create left panel (income/expenses)
-    this.controlPanel = this.#createElement('section', undefined, 'left-panel');
+    this.controlPanel = DOM.createElement('section', undefined, 'left-panel');
 
     //left panel navigation
-    const navElement = this.#createElement('nav');
-    this.expensesNav = this.#createElement('div', 'nav-btn active');
+    const navElement = DOM.createElement('nav');
+    this.expensesNav = DOM.createElement('div', 'nav-btn active');
     this.expensesNav.innerText = 'Expenses';
-    this.incomeNav = this.#createElement('div', 'nav-btn');
+    this.incomeNav = DOM.createElement('div', 'nav-btn');
     this.incomeNav.innerText = 'Income';
     navElement.append(this.expensesNav, this.incomeNav);
 
     //left panel data
-    this.budgetData = this.#createElement('section');
-    this.budgetList = this.#createElement('ul', undefined, 'budget-list');
+    this.budgetData = DOM.createElement('section');
+    this.budgetList = DOM.createElement('ul', undefined, 'budget-list');
     this.budgetData.append(this.budgetList);
 
     //left panel footer
-    this.leftPanelFooter = this.#createElement('footer');
+    this.leftPanelFooter = DOM.createElement('footer');
 
     this.controlPanel.append(navElement, this.budgetData, this.leftPanelFooter);
-  }
-
-  #createElement(tag, className, id) {
-    const el = document.createElement(tag);
-    if (className) {
-      const classes = className.split(' ');
-      el.classList.add(...classes);
-    }
-
-    if (id) {
-      el.id = id;
-    }
-    return el;
-  }
-
-  #getElement(selector) {
-    const el = document.querySelector(selector);
-    return el;
   }
 
   displayExpenses(expenses) {
@@ -81,10 +64,10 @@ class View {
     // maybe show something when empty???
     const expenseList = expenses.get();
     for (const category in expenseList) {
-      const listItem = this.#createElement('li');
-      const categoryText = this.#createElement('p', 'category-name');
+      const listItem = DOM.createElement('li');
+      const categoryText = DOM.createElement('p', 'category-name');
       categoryText.innerText = category;
-      const categorySum = this.#createElement('p', 'category-sum');
+      const categorySum = DOM.createElement('p', 'category-sum');
       categorySum.innerText = `$${expenses.sumCategory(category)}`;
       listItem.append(categoryText, categorySum);
       this.budgetList.append(listItem);
@@ -100,11 +83,11 @@ class View {
     // maybe show something when empty???
     const incomeArray = incomes.get()['income'];
     incomeArray.forEach((income) => {
-      const listItem = this.#createElement('li');
-      const categoryText = this.#createElement('p', 'income-name');
+      const listItem = DOM.createElement('li');
+      const categoryText = DOM.createElement('p', 'income-name');
       categoryText.innerText = income.title;
 
-      const incomeText = this.#createElement('p', 'income-amount');
+      const incomeText = DOM.createElement('p', 'income-amount');
       incomeText.innerText = `$${income.money}`;
 
       listItem.append(categoryText, incomeText);
@@ -128,11 +111,11 @@ class View {
 
     const items = expenses.getCategoryItems(categoryName);
     items.forEach((item) => {
-      const listItem = this.#createElement('li');
-      const categoryText = this.#createElement('p', 'income-name');
+      const listItem = DOM.createElement('li');
+      const categoryText = DOM.createElement('p', 'income-name');
       categoryText.innerText = item.title;
 
-      const incomeText = this.#createElement('p', 'income-amount');
+      const incomeText = DOM.createElement('p', 'income-amount');
       incomeText.innerText = `$${item.money}`;
 
       listItem.append(categoryText, incomeText);
@@ -153,9 +136,9 @@ class View {
 
   #setFooter(text, money) {
     this.leftPanelFooter.innerHTML = '';
-    const description = this.#createElement('p');
+    const description = DOM.createElement('p');
     description.innerText = text;
-    const total = this.#createElement('p');
+    const total = DOM.createElement('p');
     total.innerText = `$${money}`;
     this.leftPanelFooter.append(description, total);
   }
