@@ -44,10 +44,19 @@ class View {
     this.budgetList = DOM.createElement('ul', undefined, 'budget-list');
     this.budgetData.append(this.budgetList);
 
+    //left panel add button
+    this.addItemButton = DOM.createElement('button', 'add-item-btn');
+    this.addItemButton.innerText = 'Add';
+
     //left panel footer
     this.leftPanelFooter = DOM.createElement('footer');
 
-    this.controlPanel.append(navElement, this.budgetData, this.leftPanelFooter);
+    this.controlPanel.append(
+      navElement,
+      this.budgetData,
+      this.addItemButton,
+      this.leftPanelFooter,
+    );
   }
 
   displayModal(type) {
@@ -239,6 +248,12 @@ class View {
           evt.currentTarget.querySelector('.category-name').innerHTML;
         handlerFunc(categoryName);
       });
+    });
+  }
+
+  setAddItem(handlerFunc) {
+    this.addItemButton.addEventListener('click', (evt) => {
+      handlerFunc();
     });
   }
 }

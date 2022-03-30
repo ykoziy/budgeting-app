@@ -10,6 +10,8 @@ class Controller {
     this.view.displayChart(this.model.expenses, this.model.incomes);
 
     this.view.setCategoryOpen(this.handleCategoryOpen);
+
+    this.view.setAddItem(this.handleAddItem);
   }
 
   // links model and view
@@ -26,6 +28,10 @@ class Controller {
 
   handleCategoryOpen = (categoryName) => {
     this.view.openCategory(categoryName, this.model.expenses);
+  };
+
+  handleAddItem = () => {
+    this.view.displayModal('add');
   };
 }
 
