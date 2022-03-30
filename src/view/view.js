@@ -15,13 +15,7 @@ class View {
     //create right panel (graph holder)
     this.chartPanel = DOM.createElement('section', undefined, 'right-panel');
 
-    const modalContainer = DOM.createElement(
-      'div',
-      undefined,
-      'modal-container',
-    );
-
-    mainElement.append(this.controlPanel, this.chartPanel, modalContainer);
+    mainElement.append(this.controlPanel, this.chartPanel);
 
     //create footer
     const footerElement = DOM.createElement('footer');
@@ -54,6 +48,86 @@ class View {
     this.leftPanelFooter = DOM.createElement('footer');
 
     this.controlPanel.append(navElement, this.budgetData, this.leftPanelFooter);
+  }
+
+  displayModal(type) {
+    const modalContainer = DOM.createElement(
+      'div',
+      undefined,
+      'modal-container',
+    );
+    document.body.append(modalContainer);
+
+    let modal;
+    if (type === 'add' || type === 'edit') {
+      modal = this.#createAddEditModal(type);
+    } else if (type === 'delete') {
+      modal = this.#createDeleteModal();
+    }
+    modalContainer.append(modal);
+  }
+
+  #createAddEditModal(type) {
+    const modal = DOM.createElement('div', 'modal');
+
+    const modalTop = DOM.createElement('div', 'modal-top');
+    const modalBottom = DOM.createElement('div', 'modal-bottom');
+    modal.append(modalTop);
+    modal.append(modalBottom);
+
+    const labelCat = DOM.createElement('label');
+    labelCat.innerText = 'Category:';
+    labelCat.setAttribute('for', 'category-name');
+
+    const labelName = DOM.createElement('label');
+    labelName.innerText = 'Name:';
+    labelName.setAttribute('for', 'name');
+
+    const categoryInput = DOM.createElement('input', null, 'category-name');
+    categoryInput.setAttribute('type', 'text');
+
+    const nameInput = DOM.createElement('input', null, 'name');
+    nameInput.setAttribute('type', 'text');
+
+    modalTop.append(labelCat, categoryInput, labelName, nameInput);
+
+    const cancelButton = DOM.createElement('button', 'cancel-btn');
+    cancelButton.innerText = 'Cancel';
+
+    let addEditButton;
+    if (type === 'edit') {
+      addEditButton = DOM.createElement('button', 'save-btn');
+      addEditButton.innerText = 'Save';
+    } else {
+      addEditButton = DOM.createElement('button', 'add-btn');
+      addEditButton.innerText = 'Add';
+    }
+
+    modalBottom.append(cancelButton, addEditButton);
+    return modal;
+  }
+
+  #createDeleteModal() {
+    const modal = DOM.createElement('div', 'modal');
+
+    const modalTop = DOM.createElement('div', 'modal-top');
+    const modalBottom = DOM.createElement('div', 'modal-bottom');
+    modal.append(modalTop);
+    modal.append(modalBottom);
+
+    const confirmationMsg = DOM.createElement('p');
+    confirmationMsg.innerText = 'Are you sure you want to delete?';
+
+    modalTop.append(confirmationMsg);
+
+    const cancelButton = DOM.createElement('button', 'cancel-btn');
+    cancelButton.innerText = 'Cancel';
+
+    const yesBtn = DOM.createElement('button', 'yes-btn');
+    yesBtn.innerText = 'Yes';
+
+    modalBottom.append(cancelButton, yesBtn);
+    return modal;
   }
 
   displayExpenses(expenses) {
