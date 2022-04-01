@@ -12,6 +12,9 @@ class Controller {
     this.view.setCategoryOpen(this.handleCategoryOpen);
 
     this.view.setAddItem(this.handleAddItem);
+
+    this.view.setAddBudgetItemSave(this.handleAddBudgetItemSave);
+    this.view.setModalCancel(this.handleCancelModal);
   }
 
   // links model and view
@@ -32,6 +35,18 @@ class Controller {
 
   handleAddItem = () => {
     this.view.displayModal('add');
+  };
+
+  handleAddBudgetItemSave = (categoryName, name, dollarAmount) => {
+    const output = `Adding budget item to the app.
+    category name: ${categoryName}
+    name: ${name}
+    dollar amount: ${dollarAmount}`;
+    console.log(output);
+  };
+
+  handleCancelModal = () => {
+    this.view.removeModal();
   };
 }
 

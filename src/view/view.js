@@ -76,6 +76,11 @@ class View {
     modalContainer.append(modal);
   }
 
+  removeModal() {
+    const modal = document.querySelector('#modal-container');
+    modal.remove();
+  }
+
   #createAddEditModal(type) {
     const modal = DOM.createElement('div', 'modal');
 
@@ -92,13 +97,27 @@ class View {
     labelName.innerText = 'Name:';
     labelName.setAttribute('for', 'name');
 
+    const labelDollarAmount = DOM.createElement('label');
+    labelDollarAmount.innerText = 'Amount $:';
+    labelDollarAmount.setAttribute('for', 'dollar-amount');
+
     const categoryInput = DOM.createElement('input', null, 'category-name');
     categoryInput.setAttribute('type', 'text');
 
     const nameInput = DOM.createElement('input', null, 'name');
     nameInput.setAttribute('type', 'text');
 
-    modalTop.append(labelCat, categoryInput, labelName, nameInput);
+    const dollarAmountInput = DOM.createElement('input', null, 'dollar-amount');
+    dollarAmountInput.setAttribute('type', 'text');
+
+    modalTop.append(
+      labelCat,
+      categoryInput,
+      labelName,
+      nameInput,
+      labelDollarAmount,
+      dollarAmountInput,
+    );
 
     const cancelButton = DOM.createElement('button', 'cancel-btn');
     cancelButton.innerText = 'Cancel';
@@ -254,6 +273,35 @@ class View {
   setAddItem(handlerFunc) {
     this.addItemButton.addEventListener('click', (evt) => {
       handlerFunc();
+    });
+  }
+
+  setAddBudgetItemSave(handlerFunc) {
+    document.body.addEventListener('click', (evt) => {
+      if (
+        evt.target.classList.contains('add-btn') &&
+        evt.target.parentElement.classList.contains('modal-bottom')
+      ) {
+        const categoryName = document.querySelector(
+          '.modal #category-name',
+        ).value;
+        const name = document.querySelector('.modal #name').value;
+        const dollarAmount = document.querySelector(
+          '.modal #dollar-amount',
+        ).value;
+        handlerFunc(categoryName, name, dollarAmount);
+      }
+    });
+  }
+
+  setModalCancel(handlerFunc) {
+    document.body.addEventListener('click', (evt) => {
+      if (
+        evt.target.classList.contains('cancel-btn') &&
+        evt.target.parentElement.classList.contains('modal-bottom')
+      ) {
+        handlerFunc();
+      }
     });
   }
 }
