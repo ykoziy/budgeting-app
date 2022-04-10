@@ -11,7 +11,7 @@ class PieChart {
     let totalSum = data.sum();
     for (const key in data.get()) {
       let sum = data.sumCategory(key);
-      let percent = Number((sum / totalSum).toFixed(2));
+      let percent = sum / totalSum;
       let item = { category: key, total: sum, percent: percent };
       newData.push(item);
     }
@@ -73,7 +73,7 @@ class PieChart {
         return 'translate(' + label.centroid(d) + ')';
       })
       .text(function (d) {
-        return `${d.data.percent * 100}%`;
+        return `${Math.round(d.data.percent * 100)}%`;
       })
       .style('font-family', 'arial')
       .style('font-size', 15);
