@@ -92,14 +92,6 @@ class View {
     modal.append(modalTop);
     modal.append(modalBottom);
 
-    const modalTitle = DOM.createElement('h1');
-
-    if (this.currentView === 'expense') {
-      modalTitle.innerText = 'Adding expense';
-    } else {
-      modalTitle.innerText = 'Adding income';
-    }
-
     const labelCat = DOM.createElement('label');
     labelCat.innerText = 'Category:';
     labelCat.setAttribute('for', 'category-name');
@@ -121,15 +113,29 @@ class View {
     const dollarAmountInput = DOM.createElement('input', null, 'dollar-amount');
     dollarAmountInput.setAttribute('type', 'text');
 
-    modalTop.append(
-      modalTitle,
-      labelCat,
-      categoryInput,
-      labelName,
-      nameInput,
-      labelDollarAmount,
-      dollarAmountInput,
-    );
+    const modalTitle = DOM.createElement('h1');
+
+    if (this.currentView === 'expense') {
+      modalTitle.innerText = 'Adding expense';
+      modalTop.append(
+        modalTitle,
+        labelCat,
+        categoryInput,
+        labelName,
+        nameInput,
+        labelDollarAmount,
+        dollarAmountInput,
+      );
+    } else {
+      modalTitle.innerText = 'Adding income';
+      modalTop.append(
+        modalTitle,
+        labelName,
+        nameInput,
+        labelDollarAmount,
+        dollarAmountInput,
+      );
+    }
 
     const cancelButton = DOM.createElement('button', 'cancel-btn');
     cancelButton.innerText = 'Cancel';
@@ -296,14 +302,15 @@ class View {
         evt.target.classList.contains('add-btn') &&
         evt.target.parentElement.classList.contains('modal-bottom')
       ) {
-        const categoryName = document.querySelector(
-          '.modal #category-name',
-        ).value;
+        let categoryName = 'income';
+        if (this.currentView === 'expense') {
+          categoryName = document.querySelector('.modal #category-name').value;
+        }
         const name = document.querySelector('.modal #name').value;
         const dollarAmount = document.querySelector(
           '.modal #dollar-amount',
         ).value;
-        handlerFunc(categoryName, name, dollarAmount);
+        handlerFunc(categoryName, name, dollarAmount, this.currentView);
       }
     });
   }
