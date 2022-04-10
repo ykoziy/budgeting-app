@@ -45,6 +45,8 @@ main {
     min-height: 150px;
     background-color: whitesmoke;
     display: grid;
+    gap: 10px;
+    padding: 25px;
     grid-template-rows: auto auto;
 
     #category-name,
@@ -54,6 +56,9 @@ main {
 
     .modal-top {
       align-self: center;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
     .modal-bottom {
