@@ -37,12 +37,12 @@ class Controller {
     this.view.displayModal('add');
   };
 
-  handleAddBudgetItemSave = (categoryName, name, dollarAmount) => {
-    const output = `Adding budget item to the app.
-    category name: ${categoryName}
-    name: ${name}
-    dollar amount: ${dollarAmount}`;
-    console.log(output);
+  handleAddBudgetItemSave = (categoryName, name, dollarAmount, type) => {
+    if (type === 'expense') {
+      this.model.addExpense(name, Number(dollarAmount), categoryName);
+    } else {
+      this.model.addIncome(name, Number(dollarAmount));
+    }
   };
 
   handleCancelModal = () => {
