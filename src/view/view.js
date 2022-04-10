@@ -25,6 +25,9 @@ class View {
 
     //build the page
     document.body.append(headerElement, mainElement, footerElement);
+
+    //current view
+    this.currentView = 'expenses';
   }
 
   #buildMainPanel() {
@@ -89,6 +92,14 @@ class View {
     modal.append(modalTop);
     modal.append(modalBottom);
 
+    const modalTitle = DOM.createElement('h1');
+
+    if (this.currentView === 'expense') {
+      modalTitle.innerText = 'Adding expense';
+    } else {
+      modalTitle.innerText = 'Adding income';
+    }
+
     const labelCat = DOM.createElement('label');
     labelCat.innerText = 'Category:';
     labelCat.setAttribute('for', 'category-name');
@@ -111,6 +122,7 @@ class View {
     dollarAmountInput.setAttribute('type', 'text');
 
     modalTop.append(
+      modalTitle,
       labelCat,
       categoryInput,
       labelName,
@@ -160,6 +172,7 @@ class View {
 
   displayExpenses(expenses) {
     this.#setActiveNav(1);
+    this.currentView = 'expense';
     while (this.budgetList.firstChild) {
       this.budgetList.removeChild(this.budgetList.firstChild);
     }
@@ -179,6 +192,7 @@ class View {
 
   displayIncomes(incomes) {
     this.#setActiveNav(2);
+    this.currentView = 'income';
     while (this.budgetList.firstChild) {
       this.budgetList.removeChild(this.budgetList.firstChild);
     }
