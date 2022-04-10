@@ -27,14 +27,22 @@ class Model {
     this.incomes.add(inc1);
   }
 
+  setBudgetListChanged(callback) {
+    this.onBudgetListChanged = callback;
+  }
+
   addIncome(description, amount) {
     const income = new Income(description, amount);
     this.incomes.add(income);
+
+    this.onBudgetListChanged();
   }
 
   addExpense(description, amount, category) {
     const expense = new Expense(description, amount);
     this.expenses.add(expense, category);
+
+    this.onBudgetListChanged();
   }
 
   editExpense(category = 'other', index, newData) {
