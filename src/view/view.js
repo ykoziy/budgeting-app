@@ -197,8 +197,14 @@ class View {
     while (this.budgetList.firstChild) {
       this.budgetList.removeChild(this.budgetList.firstChild);
     }
-    // maybe show something when empty???
+
     const expenseList = expenses.get();
+
+    if (!expenseList) {
+      this.#setFooter('Total Expenses:', 0);
+      return;
+    }
+
     for (const category in expenseList) {
       const listItem = DOM.createElement('li');
       const categoryText = DOM.createElement('p', 'category-name');
@@ -217,8 +223,14 @@ class View {
     while (this.budgetList.firstChild) {
       this.budgetList.removeChild(this.budgetList.firstChild);
     }
-    // maybe show something when empty???
-    const incomeArray = incomes.get()['income'];
+
+    const incomeList = incomes.get()['income'];
+
+    if (!incomeList) {
+      this.#setFooter('Total Income:', 0);
+      return;
+    }
+
     incomeArray.forEach((income) => {
       const listItem = DOM.createElement('li');
       listItem.dataset.category = 'income';
