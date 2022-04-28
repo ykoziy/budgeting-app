@@ -47,6 +47,20 @@ class Model {
     }
   }
 
+  deleteIncome(category, id) {
+    this.incomes.delete(category, id);
+    if (this.onBudgetListChanged) {
+      this.onBudgetListChanged();
+    }
+  }
+
+  deleteExpense(category, id) {
+    this.expenses.delete(category, id);
+    if (this.onBudgetListChanged) {
+      this.onBudgetListChanged();
+    }
+  }
+
   editExpense(category = 'other', index, newData) {
     this.expenses.edit(category, index, newData);
   }

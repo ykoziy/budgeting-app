@@ -25,14 +25,14 @@ class Controller {
       this.view.setCategoryOpen(this.handleCategoryOpen);
       this.view.displayChart(this.model.expenses, this.model.incomes);
     } else {
-      this.view.displayIncomes(this.model.incomes);
+      this.view.displayIncomes(this.model.incomes, this.handleDeleteItem);
       this.view.displayChart(this.model.expenses, this.model.incomes);
     }
   };
 
   handleIncomeNav = () => {
     this.currentView = 'income';
-    this.view.displayIncomes(this.model.incomes);
+    this.view.displayIncomes(this.model.incomes, this.handleDeleteItem);
   };
 
   handleExpenseNav = () => {
@@ -42,11 +42,23 @@ class Controller {
   };
 
   handleCategoryOpen = (categoryName) => {
-    this.view.openCategory(categoryName, this.model.expenses);
+    this.view.openCategory(
+      categoryName,
+      this.model.expenses,
+      this.handleDeleteItem,
+    );
   };
 
   handleAddItem = () => {
     this.view.displayModal('add');
+  };
+
+  handleDeleteItem = (category, id) => {
+    if (this.currentView === 'income') {
+      this.model.deleteIncome(category, id);
+    } else if (this.currentView === 'expense') {
+      this.model.deleteExpense(category, id);
+    }
   };
 
   handleAddBudgetItemSave = (categoryName, name, dollarAmount, type) => {

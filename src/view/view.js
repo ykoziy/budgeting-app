@@ -176,6 +176,21 @@ class View {
     return modal;
   }
 
+  #createDeleteItemButton() {
+    const button = DOM.createElement('button', 'delete-item-btn');
+    button.innerText = 'X';
+    return button;
+  }
+
+  #attachItemHandler(node, eventHandler) {
+    node.addEventListener('click', (evt) => {
+      const parent = evt.currentTarget.parentElement;
+      let category = parent.dataset.category;
+      let id = parent.dataset.id;
+      eventHandler(category, id);
+    });
+  }
+
   displayExpenses(expenses) {
     this.#setActiveNav(1);
     this.currentView = 'expense';
@@ -196,7 +211,7 @@ class View {
     this.#setFooter('Total Expenses:', expenses.sum());
   }
 
-  displayIncomes(incomes) {
+  displayIncomes(incomes, deleteHandler) {
     this.#setActiveNav(2);
     this.currentView = 'income';
     while (this.budgetList.firstChild) {
@@ -206,13 +221,19 @@ class View {
     const incomeArray = incomes.get()['income'];
     incomeArray.forEach((income) => {
       const listItem = DOM.createElement('li');
+      listItem.dataset.category = 'income';
+      listItem.dataset.id = income.getId();
       const categoryText = DOM.createElement('p', 'income-name');
       categoryText.innerText = income.title;
 
       const incomeText = DOM.createElement('p', 'income-amount');
       incomeText.innerText = `$${income.money}`;
 
-      listItem.append(categoryText, incomeText);
+      const deleteButton = this.#createDeleteItemButton();
+      this.#attachItemHandler(deleteButton, deleteHandler);
+
+      listItem.append(categoryText, incomeText, deleteButton);
+
       this.budgetList.append(listItem);
     });
     this.#setFooter('Total Income:', incomes.sum());
@@ -229,8 +250,7 @@ class View {
     chart.show();
   }
 
-  openCategory(categoryName, expenses) {
-    //console.log(expenses.getCategoryItems(categoryName));
+  openCategory(categoryName, expenses, deleteHandler) {
     while (this.budgetList.firstChild) {
       this.budgetList.removeChild(this.budgetList.firstChild);
     }
@@ -238,13 +258,18 @@ class View {
     const items = expenses.getCategoryItems(categoryName);
     items.forEach((item) => {
       const listItem = DOM.createElement('li');
-      const categoryText = DOM.createElement('p', 'income-name');
+      listItem.dataset.category = categoryName;
+      listItem.dataset.id = item.getId();
+      const categoryText = DOM.createElement('p', 'budget-name');
       categoryText.innerText = item.title;
 
-      const incomeText = DOM.createElement('p', 'income-amount');
+      const incomeText = DOM.createElement('p', 'budget-amount');
       incomeText.innerText = `$${item.money}`;
 
-      listItem.append(categoryText, incomeText);
+      const deleteButton = this.#createDeleteItemButton();
+      this.#attachItemHandler(deleteButton, deleteHandler);
+
+      listItem.append(categoryText, incomeText, deleteButton);
       this.budgetList.append(listItem);
     });
     this.#setFooter('Total:', expenses.sumCategory(categoryName));
