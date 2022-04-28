@@ -339,7 +339,7 @@ class View {
         const dollarAmount = document.querySelector(
           '.modal #dollar-amount',
         ).value;
-        handlerFunc(categoryName, name, dollarAmount, this.currentView);
+        handlerFunc(categoryName, name, dollarAmount);
       }
     });
   }

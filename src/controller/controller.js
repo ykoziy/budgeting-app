@@ -61,11 +61,11 @@ class Controller {
     }
   };
 
-  handleAddBudgetItemSave = (categoryName, name, dollarAmount, type) => {
-    if (type === 'expense') {
-      this.model.addExpense(name, Number(dollarAmount), categoryName);
-    } else {
+  handleAddBudgetItemSave = (categoryName, name, dollarAmount) => {
+    if (this.currentView === 'income') {
       this.model.addIncome(name, Number(dollarAmount));
+    } else if (this.currentView === 'expense') {
+      this.model.addExpense(name, Number(dollarAmount), categoryName);
     }
   };
 
