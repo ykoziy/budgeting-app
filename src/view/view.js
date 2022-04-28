@@ -191,6 +191,16 @@ class View {
     });
   }
 
+  #generateListItem(name, amount) {
+    const item = DOM.createElement('li');
+    const budgetItemText = DOM.createElement('p', 'budget-item-name');
+    budgetItemText.innerText = name;
+    const budgetItemAmount = DOM.createElement('p', 'budget-item-sum');
+    budgetItemAmount.innerText = `$${amount}`;
+    item.append(budgetItemText, budgetItemAmount);
+    return item;
+  }
+
   displayExpenses(expenses) {
     this.#setActiveNav(1);
     this.currentView = 'expense';
@@ -206,15 +216,32 @@ class View {
     }
 
     for (const category in expenseList) {
-      const listItem = DOM.createElement('li');
-      const categoryText = DOM.createElement('p', 'category-name');
-      categoryText.innerText = category;
-      const categorySum = DOM.createElement('p', 'category-sum');
-      categorySum.innerText = `$${expenses.sumCategory(category)}`;
-      listItem.append(categoryText, categorySum);
+      const listItem = this.#generateListItem(
+        category,
+        expenses.sumCategory(category),
+      );
       this.budgetList.append(listItem);
     }
     this.#setFooter('Total Expenses:', expenses.sum());
+  }
+
+  openCategory(categoryName, expenses, deleteHandler) {
+    while (this.budgetList.firstChild) {
+      this.budgetList.removeChild(this.budgetList.firstChild);
+    }
+
+    const items = expenses.getCategoryItems(categoryName);
+    items.forEach((item) => {
+      const listItem = this.#generateListItem(item.title, item.money);
+      listItem.dataset.category = categoryName;
+      listItem.dataset.id = item.getId();
+      const deleteButton = this.#createDeleteItemButton();
+      this.#attachItemHandler(deleteButton, deleteHandler);
+
+      listItem.append(deleteButton);
+      this.budgetList.append(listItem);
+    });
+    this.#setFooter('Total:', expenses.sumCategory(categoryName));
   }
 
   displayIncomes(incomes, deleteHandler) {
@@ -231,14 +258,14 @@ class View {
       return;
     }
 
-    incomeArray.forEach((income) => {
+    incomeList.forEach((income) => {
       const listItem = DOM.createElement('li');
       listItem.dataset.category = 'income';
       listItem.dataset.id = income.getId();
-      const categoryText = DOM.createElement('p', 'income-name');
+      const categoryText = DOM.createElement('p', 'budget-item-name');
       categoryText.innerText = income.title;
 
-      const incomeText = DOM.createElement('p', 'income-amount');
+      const incomeText = DOM.createElement('p', 'budget-item-amount');
       incomeText.innerText = `$${income.money}`;
 
       const deleteButton = this.#createDeleteItemButton();
@@ -260,31 +287,6 @@ class View {
     this.chartPanel.append(svg);
     const chart = new PieChart(this.chartPanel, expenses);
     chart.show();
-  }
-
-  openCategory(categoryName, expenses, deleteHandler) {
-    while (this.budgetList.firstChild) {
-      this.budgetList.removeChild(this.budgetList.firstChild);
-    }
-
-    const items = expenses.getCategoryItems(categoryName);
-    items.forEach((item) => {
-      const listItem = DOM.createElement('li');
-      listItem.dataset.category = categoryName;
-      listItem.dataset.id = item.getId();
-      const categoryText = DOM.createElement('p', 'budget-name');
-      categoryText.innerText = item.title;
-
-      const incomeText = DOM.createElement('p', 'budget-amount');
-      incomeText.innerText = `$${item.money}`;
-
-      const deleteButton = this.#createDeleteItemButton();
-      this.#attachItemHandler(deleteButton, deleteHandler);
-
-      listItem.append(categoryText, incomeText, deleteButton);
-      this.budgetList.append(listItem);
-    });
-    this.#setFooter('Total:', expenses.sumCategory(categoryName));
   }
 
   #setActiveNav(activeNav) {
@@ -325,7 +327,7 @@ class View {
     listItems.forEach((listItem) => {
       listItem.addEventListener('click', (evt) => {
         const categoryName =
-          evt.currentTarget.querySelector('.category-name').innerHTML;
+          evt.currentTarget.querySelector('.budget-item-name').innerHTML;
         handlerFunc(categoryName);
       });
     });
