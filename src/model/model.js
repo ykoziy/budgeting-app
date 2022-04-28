@@ -34,15 +34,17 @@ class Model {
   addIncome(description, amount) {
     const income = new Income(description, amount);
     this.incomes.add(income);
-
-    this.onBudgetListChanged();
+    if (this.onBudgetListChanged) {
+      this.onBudgetListChanged();
+    }
   }
 
   addExpense(description, amount, category) {
     const expense = new Expense(description, amount);
     this.expenses.add(expense, category);
-
-    this.onBudgetListChanged();
+    if (this.onBudgetListChanged) {
+      this.onBudgetListChanged();
+    }
   }
 
   editExpense(category = 'other', index, newData) {
