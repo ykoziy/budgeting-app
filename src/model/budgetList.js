@@ -59,8 +59,6 @@ class BudgetList {
     return false;
   }
 
-  //#cleanUpCategory
-
   delete(category, id) {
     let isDeleted = false;
     if (this.items.hasOwnProperty(category)) {
