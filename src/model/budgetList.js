@@ -59,6 +59,8 @@ class BudgetList {
     return false;
   }
 
+  //#cleanUpCategory
+
   delete(category, id) {
     let isDeleted = false;
     if (this.items.hasOwnProperty(category)) {
@@ -68,6 +70,9 @@ class BudgetList {
           isDeleted = true;
         }
       });
+      if (this.items[category].length == 0) {
+        delete this.items[category];
+      }
     }
     return isDeleted;
   }
