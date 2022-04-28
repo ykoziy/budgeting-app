@@ -96,8 +96,9 @@ describe('Testing ExpenseList class', () => {
     expect(Object.keys(expenses.get()).length).toEqual(1);
   });
 
-  it('should delete item at index in category', () => {
+  it('should delete item with ID in category', () => {
     const expenseA = new Expense('gas', 35.78);
+    const deletionId = expenseA.getId();
     const expenseB = new Expense('food', 560.1);
     const expenseC = new Expense('ski lessons', 250.45);
 
@@ -106,7 +107,7 @@ describe('Testing ExpenseList class', () => {
     expenses.add(expenseB);
     expenses.add(expenseC, 'fun');
 
-    expect(expenses.deleteCategoryIndex('other', 0)).toBe(true);
+    expect(expenses.delete('other', deletionId)).toBe(true);
     expect(expenses.get()['other'].length).toEqual(1);
     expect(expenses.get()['other'][0]).toBe(expenseB);
   });

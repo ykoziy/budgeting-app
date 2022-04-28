@@ -50,20 +50,21 @@ describe('Testing IncomeList class', () => {
     incomes.add(incomeA);
     incomes.add(incomeB);
 
-    incomes.delete('gifts');
-
-    expect(incomes.get()['income'].length).toEqual(1);
+    incomes.delete('income', 'u123z');
+    expect(incomes.delete('income', 'u123z')).toBe(false);
+    expect(incomes.get()['income'].length).toEqual(2);
   });
 
-  it('should delete income item', () => {
+  it('should delete income item by ID', () => {
     const incomeA = new Income('full-time job', 32400);
     const incomeB = new Income('crypto', 2000);
+    const deletionID = incomeB.getId();
 
     const incomes = new IncomeList();
     incomes.add(incomeA);
     incomes.add(incomeB);
 
-    incomes.delete(incomeB.title);
+    incomes.delete('income', deletionID);
 
     expect(incomes.get()['income'].length).toEqual(1);
   });
