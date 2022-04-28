@@ -38,7 +38,7 @@ class Controller {
   handleExpenseNav = () => {
     this.currentView = 'expense';
     this.view.displayExpenses(this.model.expenses);
-    this.view.setCategoryOpen(this.handleCategoryOpen);
+    this.view.setCategoryOpen(this.handleCategoryOpen, this.handleDeleteItem);
   };
 
   handleCategoryOpen = (categoryName) => {
