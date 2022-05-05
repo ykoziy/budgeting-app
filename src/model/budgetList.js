@@ -46,18 +46,19 @@ class BudgetList {
     return Number(sum.toFixed(2));
   }
 
-  edit(category, index, newData) {
-    if (this.items.hasOwnProperty(category)) {
-      let item = this.items[category][index];
-      if (newData.hasOwnProperty('description')) {
-        item.title = newData.description;
-      }
-      if (newData.hasOwnProperty('money')) {
-        item.money = newData.money;
-      }
-      return true;
-    } else {
-      return false;
+  edit(id, newData) {
+    for (const prop in this.items) {
+      const itemArray = this.items[prop];
+      itemArray.every((item) => {
+        if (item.id === id) {
+          if (newData.hasOwnProperty('description')) {
+            item.title = newData.description;
+          }
+          if (newData.hasOwnProperty('money')) {
+            item.money = newData.money;
+          }
+        }
+      });
     }
   }
 

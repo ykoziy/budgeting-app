@@ -61,12 +61,12 @@ class Model {
     }
   }
 
-  editExpense(category = 'other', index, newData) {
-    this.expenses.edit(category, index, newData);
+  editExpense(id, newData) {
+    this.expenses.edit(id, newData);
   }
 
-  editIncome(index, newData) {
-    this.incomes.edit('income', index, newData);
+  editIncome(id, newData) {
+    this.incomes.edit(id, newData);
   }
 
   renameCategory(oldName, newName) {

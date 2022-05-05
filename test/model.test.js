@@ -27,33 +27,23 @@ describe('Testing the Model', () => {
     );
   });
 
-  it('should be able to edit an expense without a category', () => {
-    model.addExpense('internet', 76.98);
-    const newCost = 95.78;
-    const newTitle = 'nope';
-    model.editExpense(undefined, 0, { money: newCost, description: newTitle });
-
-    expect(model.expenses.getByCategoryIndex('other', 0).money).toEqual(
-      newCost,
-    );
-    expect(model.expenses.getByCategoryIndex('other', 0).title).toEqual(
-      newTitle,
-    );
-  });
-
-  it('should be able to edit an expense with a category', () => {
+  it('should be able to edit an expense by ID', () => {
     model.addExpense('water', 45.12, 'utilities');
+    const editID = model.expenses.getByCategoryIndex('utilities', 0).getId();
     const newCost = 63.45;
-    model.editExpense('utilities', 0, { money: 63.45 });
+
+    model.editExpense(editID, { money: 63.45 });
     expect(model.expenses.getByCategoryIndex('utilities', 0).money).toEqual(
       newCost,
     );
   });
 
-  it('should be able to edit an income', () => {
+  it('should be able to edit an income by ID', () => {
     model.addIncome('full-time job', 32500);
+    const editID = model.incomes.getByIndex(0).getId();
     const newIncome = 42100;
-    model.editIncome(0, { money: newIncome });
+
+    model.editIncome(editID, { money: newIncome });
     expect(model.incomes.getByIndex(0).money).toEqual(newIncome);
   });
 
