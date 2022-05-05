@@ -124,4 +124,19 @@ describe('Testing ExpenseList class', () => {
     expect(expenses.getCategoryItems('other')[0]).toBe(expenseA);
     expect(expenses.getCategoryItems('other')[1]).toBe(expenseB);
   });
+
+  it('should get expense item by ID', () => {
+    const expenseA = new Expense('gas', 35.78);
+    const expenseB = new Expense('food', 560.1);
+    const expenseC = new Expense('ski lessons', 250.45);
+
+    const expenseID = expenseB.getId();
+
+    const expenses = new ExpenseList();
+    expenses.add(expenseA);
+    expenses.add(expenseB, 'not fun');
+    expenses.add(expenseC, 'fun');
+
+    expect(expenses.getByID(expenseID).money).toEqual(560.1);
+  });
 });

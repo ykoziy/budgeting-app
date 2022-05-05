@@ -68,4 +68,16 @@ describe('Testing IncomeList class', () => {
 
     expect(incomes.get()['income'].length).toEqual(1);
   });
+
+  it('should get income item by ID', () => {
+    const incomeA = new Income('full-time job', 32400);
+    const incomeB = new Income('crypto', 2000);
+    const incomeID = incomeA.getId();
+
+    const incomes = new IncomeList();
+    incomes.add(incomeA);
+    incomes.add(incomeB);
+
+    expect(incomes.getByID(incomeID).money).toEqual(32400);
+  });
 });

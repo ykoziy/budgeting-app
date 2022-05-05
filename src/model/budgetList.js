@@ -15,6 +15,19 @@ class BudgetList {
     return this.items;
   }
 
+  getByID(id) {
+    let itemFound;
+    for (const prop in this.items) {
+      const itemArray = this.items[prop];
+      itemArray.forEach((item) => {
+        if (item.id === id) {
+          itemFound = item;
+        }
+      });
+    }
+    return itemFound;
+  }
+
   getCategoryItems(category) {
     return this.items[category];
   }
