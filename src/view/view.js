@@ -87,10 +87,10 @@ class View {
   #createAddEditModal(type) {
     const modal = DOM.createElement('div', 'modal');
 
-    const modalTop = DOM.createElement('div', 'modal-top');
+    const modalForm = DOM.createElement('form', 'modal-top');
     const modalBottom = DOM.createElement('div', 'modal-bottom');
-    modal.append(modalTop);
-    modal.append(modalBottom);
+
+    modal.append(modalForm);
 
     const labelCat = DOM.createElement('label');
     labelCat.innerText = 'Category:';
@@ -109,15 +109,17 @@ class View {
 
     const nameInput = DOM.createElement('input', null, 'name');
     nameInput.setAttribute('type', 'text');
+    nameInput.setAttribute('required', true);
 
     const dollarAmountInput = DOM.createElement('input', null, 'dollar-amount');
     dollarAmountInput.setAttribute('type', 'text');
+    dollarAmountInput.setAttribute('required', true);
 
     const modalTitle = DOM.createElement('h1');
 
     if (this.currentView === 'expense') {
       modalTitle.innerText = 'Adding expense';
-      modalTop.append(
+      modalForm.append(
         modalTitle,
         labelCat,
         categoryInput,
@@ -128,7 +130,7 @@ class View {
       );
     } else {
       modalTitle.innerText = 'Adding income';
-      modalTop.append(
+      modalForm.append(
         modalTitle,
         labelName,
         nameInput,
@@ -138,18 +140,24 @@ class View {
     }
 
     const cancelButton = DOM.createElement('button', 'cancel-btn');
+    cancelButton.setAttribute('type', 'button');
     cancelButton.innerText = 'Cancel';
 
     let addEditButton;
     if (type === 'edit') {
       addEditButton = DOM.createElement('button', 'save-btn');
+      addEditButton.setAttribute('value', 'edit');
       addEditButton.innerText = 'Save';
     } else {
       addEditButton = DOM.createElement('button', 'add-btn');
+      addEditButton.setAttribute('value', 'add');
       addEditButton.innerText = 'Add';
     }
 
+    addEditButton.setAttribute('type', 'submit');
+
     modalBottom.append(cancelButton, addEditButton);
+    modalForm.append(modalBottom);
     return modal;
   }
 
@@ -340,21 +348,17 @@ class View {
   }
 
   setAddBudgetItemSave(handlerFunc) {
-    document.body.addEventListener('click', (evt) => {
-      if (
-        evt.target.classList.contains('add-btn') &&
-        evt.target.parentElement.classList.contains('modal-bottom')
-      ) {
-        let categoryName = 'income';
-        if (this.currentView === 'expense') {
-          categoryName = document.querySelector('.modal #category-name').value;
-        }
-        const name = document.querySelector('.modal #name').value;
-        const dollarAmount = document.querySelector(
-          '.modal #dollar-amount',
-        ).value;
-        handlerFunc(categoryName, name, dollarAmount);
+    document.body.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+      let categoryName = 'income';
+      if (this.currentView === 'expense') {
+        categoryName = document.querySelector('.modal #category-name').value;
       }
+      const name = document.querySelector('.modal #name').value;
+      const dollarAmount = document.querySelector(
+        '.modal #dollar-amount',
+      ).value;
+      handlerFunc(categoryName, name, dollarAmount);
     });
   }
 

@@ -66,7 +66,12 @@ class Controller {
       this.model.addIncome(name, Number(dollarAmount));
       this.view.removeModal();
     } else if (this.currentView === 'expense') {
-      this.model.addExpense(name, Number(dollarAmount), categoryName);
+      if (categoryName) {
+        this.model.addExpense(name, Number(dollarAmount), categoryName);
+      } else {
+        this.model.addExpense(name, Number(dollarAmount));
+      }
+
       this.view.removeModal();
     }
   };
