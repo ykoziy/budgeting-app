@@ -75,8 +75,8 @@ class Model {
     }
   }
 
-  renameCategory(oldName, newName) {
-    this.expenses.renameCategory(oldName, newName);
+  renameCategory(categoryID, newName) {
+    this.expenses.renameCategory(categoryID, newName);
     if (this.onBudgetListChanged) {
       this.onBudgetListChanged();
     }

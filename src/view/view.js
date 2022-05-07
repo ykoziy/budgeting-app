@@ -62,7 +62,12 @@ class View {
     );
   }
 
-  displayModal(type) {
+  displayModal(
+    type,
+    data = undefined,
+    category = undefined,
+    categoryID = undefined,
+  ) {
     const modalContainer = DOM.createElement(
       'div',
       undefined,
@@ -72,7 +77,7 @@ class View {
 
     let modal;
     if (type === 'add' || type === 'edit') {
-      modal = this.#createAddEditModal(type);
+      modal = this.#createAddEditModal(type, data, category, categoryID);
     } else if (type === 'delete') {
       modal = this.#createDeleteModal();
     }
@@ -84,7 +89,12 @@ class View {
     modal.remove();
   }
 
-  #createAddEditModal(type) {
+  #createAddEditModal(
+    type,
+    data = undefined,
+    category = undefined,
+    categoryID = undefined,
+  ) {
     const modal = DOM.createElement('div', 'modal');
 
     const modalForm = DOM.createElement('form', 'modal-top');
@@ -112,13 +122,21 @@ class View {
     nameInput.setAttribute('required', true);
 
     const dollarAmountInput = DOM.createElement('input', null, 'dollar-amount');
-    dollarAmountInput.setAttribute('type', 'text');
+    dollarAmountInput.setAttribute('type', 'number');
+    dollarAmountInput.setAttribute('step', '0.01');
     dollarAmountInput.setAttribute('required', true);
 
     const modalTitle = DOM.createElement('h1');
 
     if (this.currentView === 'expense') {
-      modalTitle.innerText = 'Adding expense';
+      if (type === 'edit') {
+        modalTitle.innerText = 'Editing expense';
+        categoryInput.value = category;
+        nameInput.value = data.title;
+        dollarAmountInput.value = data.money;
+      } else {
+        modalTitle.innerText = 'Adding expense';
+      }
       modalForm.append(
         modalTitle,
         labelCat,
@@ -129,7 +147,13 @@ class View {
         dollarAmountInput,
       );
     } else {
-      modalTitle.innerText = 'Adding income';
+      if (type === 'edit') {
+        modalTitle.innerText = 'Editing income';
+        nameInput.value = data.title;
+        dollarAmountInput.value = data.money;
+      } else {
+        modalTitle.innerText = 'Adding income';
+      }
       modalForm.append(
         modalTitle,
         labelName,
@@ -148,6 +172,10 @@ class View {
       addEditButton = DOM.createElement('button', 'save-btn');
       addEditButton.setAttribute('value', 'edit');
       addEditButton.innerText = 'Save';
+      addEditButton.dataset.id = data.id;
+      if (categoryID) {
+        addEditButton.dataset.categoryId = categoryID;
+      }
     } else {
       addEditButton = DOM.createElement('button', 'add-btn');
       addEditButton.setAttribute('value', 'add');
@@ -190,12 +218,28 @@ class View {
     return button;
   }
 
+  #createEditItemButton() {
+    const button = DOM.createElement('button', 'edit-item-btn');
+    button.innerText = 'Edit';
+    return button;
+  }
+
   #attachItemHandler(node, eventHandler) {
     node.addEventListener('click', (evt) => {
       const parent = evt.currentTarget.parentElement;
       let category = parent.dataset.category;
       let id = parent.dataset.id;
       eventHandler(category, id);
+    });
+  }
+
+  #attachEditHandler(node, eventHandler) {
+    node.addEventListener('click', (evt) => {
+      const parent = evt.currentTarget.parentElement;
+      let category = parent.dataset.category;
+      let id = parent.dataset.id;
+      let categoryID = parent.dataset.categoryId;
+      eventHandler(category, id, categoryID);
     });
   }
 
@@ -233,37 +277,44 @@ class View {
     this.#setFooter('Total Expenses:', expenses.sum());
   }
 
-  openCategory(categoryName, expenses, deleteHandler) {
+  openCategory(categoryName, expenses, deleteHandler, editHandler) {
     while (this.budgetList.firstChild) {
       this.budgetList.removeChild(this.budgetList.firstChild);
     }
 
     const items = expenses.getCategoryItems(categoryName);
+    const categoryID = expenses.getCategory(categoryName).id;
     items.forEach((item) => {
       const listItem = this.#generateListItem(item.title, item.money);
       listItem.dataset.category = categoryName;
       listItem.dataset.id = item.getId();
+      listItem.dataset.categoryId = categoryID;
       const deleteButton = this.#createDeleteItemButton();
+      const editButton = this.#createEditItemButton();
       this.#attachItemHandler(deleteButton, deleteHandler);
+      this.#attachEditHandler(editButton, editHandler);
 
-      listItem.append(deleteButton);
+      listItem.append(editButton, deleteButton);
       this.budgetList.append(listItem);
     });
     this.#setFooter('Total:', expenses.sumCategory(categoryName));
   }
 
-  displayIncomes(incomes, deleteHandler) {
+  displayIncomes(incomes, deleteHandler, editHandler) {
     this.#setActiveNav(2);
     this.currentView = 'income';
     while (this.budgetList.firstChild) {
       this.budgetList.removeChild(this.budgetList.firstChild);
     }
 
-    const incomeList = incomes.get()['income'];
+    const income = incomes.get()['income'];
+    let incomeList;
 
-    if (!incomeList) {
+    if (!income) {
       this.#setFooter('Total Income:', 0);
       return;
+    } else {
+      incomeList = income.items;
     }
 
     incomeList.forEach((income) => {
@@ -277,9 +328,11 @@ class View {
       incomeText.innerText = `$${income.money}`;
 
       const deleteButton = this.#createDeleteItemButton();
+      const editButton = this.#createEditItemButton();
       this.#attachItemHandler(deleteButton, deleteHandler);
+      this.#attachEditHandler(editButton, editHandler);
 
-      listItem.append(categoryText, incomeText, deleteButton);
+      listItem.append(categoryText, incomeText, editButton, deleteButton);
 
       this.budgetList.append(listItem);
     });
@@ -350,15 +403,38 @@ class View {
   setAddBudgetItemSave(handlerFunc) {
     document.body.addEventListener('submit', (evt) => {
       evt.preventDefault();
-      let categoryName = 'income';
-      if (this.currentView === 'expense') {
-        categoryName = document.querySelector('.modal #category-name').value;
+      const submitType = document.activeElement.value;
+      if (submitType === 'add') {
+        let categoryName = 'income';
+        if (this.currentView === 'expense') {
+          categoryName = document.querySelector('.modal #category-name').value;
+        }
+        const name = document.querySelector('.modal #name').value;
+        const dollarAmount = document.querySelector(
+          '.modal #dollar-amount',
+        ).value;
+        handlerFunc(categoryName, name, dollarAmount);
       }
-      const name = document.querySelector('.modal #name').value;
-      const dollarAmount = document.querySelector(
-        '.modal #dollar-amount',
-      ).value;
-      handlerFunc(categoryName, name, dollarAmount);
+    });
+  }
+
+  setEditBudgetItemSave(handlerFunc) {
+    document.body.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+      const submitType = document.activeElement.value;
+      if (submitType === 'edit') {
+        let categoryName;
+        let categoryID = document.activeElement.dataset.categoryId;
+        const itemID = document.activeElement.dataset.id;
+        if (this.currentView === 'expense') {
+          categoryName = document.querySelector('.modal #category-name').value;
+        }
+        const name = document.querySelector('.modal #name').value;
+        const dollarAmount = document.querySelector(
+          '.modal #dollar-amount',
+        ).value;
+        handlerFunc(categoryID, itemID, categoryName, name, dollarAmount);
+      }
     });
   }
 

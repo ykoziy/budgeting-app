@@ -13,6 +13,7 @@ class Controller {
     this.view.setExpenseNav(this.handleExpenseNav);
     this.view.setAddItem(this.handleAddItem);
     this.view.setAddBudgetItemSave(this.handleAddBudgetItemSave);
+    this.view.setEditBudgetItemSave(this.handleEditItemSave);
     this.view.setModalCancel(this.handleCancelModal);
   }
 
@@ -25,20 +26,28 @@ class Controller {
       this.view.setCategoryOpen(this.handleCategoryOpen);
       this.view.displayChart(this.model.expenses, this.model.incomes);
     } else {
-      this.view.displayIncomes(this.model.incomes, this.handleDeleteItem);
+      this.view.displayIncomes(
+        this.model.incomes,
+        this.handleDeleteItem,
+        this.handleEditItem,
+      );
       this.view.displayChart(this.model.expenses, this.model.incomes);
     }
   };
 
   handleIncomeNav = () => {
     this.currentView = 'income';
-    this.view.displayIncomes(this.model.incomes, this.handleDeleteItem);
+    this.view.displayIncomes(
+      this.model.incomes,
+      this.handleDeleteItem,
+      this.handleEditItem,
+    );
   };
 
   handleExpenseNav = () => {
     this.currentView = 'expense';
     this.view.displayExpenses(this.model.expenses);
-    this.view.setCategoryOpen(this.handleCategoryOpen, this.handleDeleteItem);
+    this.view.setCategoryOpen(this.handleCategoryOpen);
   };
 
   handleCategoryOpen = (categoryName) => {
@@ -46,6 +55,7 @@ class Controller {
       categoryName,
       this.model.expenses,
       this.handleDeleteItem,
+      this.handleEditItem,
     );
   };
 
@@ -59,6 +69,40 @@ class Controller {
     } else if (this.currentView === 'expense') {
       this.model.deleteExpense(category, id);
     }
+  };
+
+  handleEditItem = (category, id, categoryID) => {
+    if (this.currentView === 'income') {
+      this.view.displayModal('edit', this.model.incomes.getByID(id));
+    } else if (this.currentView === 'expense') {
+      this.view.displayModal(
+        'edit',
+        this.model.expenses.getByID(id),
+        category,
+        categoryID,
+      );
+    }
+  };
+
+  handleEditItemSave = (
+    categoryID,
+    itemID,
+    categoryName,
+    name,
+    dollarAmount,
+  ) => {
+    if (this.currentView === 'income') {
+      this.model.editIncome(itemID, {
+        description: name,
+        money: Number(dollarAmount),
+      });
+    } else if (this.currentView === 'expense') {
+      this.model.editExpense(itemID, {
+        description: name,
+        money: Number(dollarAmount),
+      });
+    }
+    this.view.removeModal();
   };
 
   handleAddBudgetItemSave = (categoryName, name, dollarAmount) => {
