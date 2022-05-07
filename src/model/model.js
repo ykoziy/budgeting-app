@@ -81,6 +81,13 @@ class Model {
       this.onBudgetListChanged();
     }
   }
+
+  changeItemCategory(category, id) {
+    this.expenses.changeItemCategory(category, id);
+    if (this.onBudgetListChanged) {
+      this.onBudgetListChanged();
+    }
+  }
 }
 
 export default Model;

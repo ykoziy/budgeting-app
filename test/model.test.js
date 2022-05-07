@@ -62,4 +62,16 @@ describe('Testing the Model', () => {
     expect(hasOldProperty).toBeFalsy();
     expect(hasProperty).toBeTruthy();
   });
+
+  it('should be able to change item category', () => {
+    model.addExpense('gas', 86.75, 'utilities');
+    model.addExpense('restaurants', 300, 'fun');
+    const editID = model.expenses.getByCategoryIndex('fun', 0).getId();
+    model.addExpense('entertainment', 200, 'fun');
+
+    model.changeItemCategory('nope', editID);
+
+    expect(model.expenses.get()['fun'].items.length).toEqual(1);
+    expect(model.expenses.get()['nope'].items.length).toEqual(1);
+  });
 });

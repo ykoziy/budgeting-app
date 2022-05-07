@@ -104,6 +104,23 @@ class BudgetList {
     }
     return isDeleted;
   }
+
+  changeItemCategory(category, id) {
+    const itemFound = this.getByID(id);
+    if (itemFound) {
+      for (const prop in this.items) {
+        const itemArray = this.items[prop].items;
+        itemArray.forEach((item, index) => {
+          if (item.id === id) {
+            this.items[prop].items.splice(index, 1);
+          }
+        });
+      }
+      delete itemFound.id;
+      this.add(itemFound, category);
+    }
+    return 0;
+  }
 }
 
 export default BudgetList;
