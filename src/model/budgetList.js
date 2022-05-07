@@ -68,11 +68,21 @@ class BudgetList {
     }
   }
 
-  renameCategory(oldName, newName) {
-    if (this.items.hasOwnProperty(oldName)) {
-      if (newName !== oldName) {
-        this.items[newName] = this.items[oldName];
-        delete this.items[oldName];
+  renameCategory(categoryID, newName) {
+    for (const prop in this.items) {
+      if (this.items[prop].id === categoryID) {
+        this.items[newName] = this.items[prop];
+        delete this.items[prop];
+        return true;
+      }
+    }
+    return false;
+  }
+
+  deleteCategoryID(categoryID) {
+    for (const prop in this.items) {
+      if (this.items[prop].id === categoryID) {
+        delete this.items[prop];
         return true;
       }
     }

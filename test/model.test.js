@@ -47,12 +47,14 @@ describe('Testing the Model', () => {
     expect(model.incomes.getByIndex(0).money).toEqual(newIncome);
   });
 
-  it('should be able to rename an expense category', () => {
+  it('should be able to rename an expense category by ID', () => {
     model.addExpense('gas', 86.75, 'utilities');
     model.addExpense('restaurants', 300, 'fun');
     model.addExpense('entertainment', 200, 'fun');
 
-    model.renameCategory('fun', 'waste of money');
+    const categoryID = model.expenses.getCategory('fun').id;
+
+    model.renameCategory(categoryID, 'waste of money');
 
     const hasProperty = model.expenses.get().hasOwnProperty('waste of money');
     const hasOldProperty = model.expenses.get().hasOwnProperty('fun');
