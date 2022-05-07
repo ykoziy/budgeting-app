@@ -55,7 +55,7 @@ class BudgetList {
   edit(id, newData) {
     for (const prop in this.items) {
       const itemArray = this.items[prop].items;
-      itemArray.every((item) => {
+      itemArray.forEach((item) => {
         if (item.id === id) {
           if (newData.hasOwnProperty('description')) {
             item.title = newData.description;
