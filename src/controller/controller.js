@@ -84,13 +84,7 @@ class Controller {
     }
   };
 
-  handleEditItemSave = (
-    categoryID,
-    itemID,
-    categoryName,
-    name,
-    dollarAmount,
-  ) => {
+  handleEditItemSave = (itemID, categoryName, name, dollarAmount) => {
     if (this.currentView === 'income') {
       this.model.editIncome(itemID, {
         description: name,
@@ -101,6 +95,7 @@ class Controller {
         description: name,
         money: Number(dollarAmount),
       });
+      this.model.changeItemCategory(categoryName, itemID);
     }
     this.view.removeModal();
   };

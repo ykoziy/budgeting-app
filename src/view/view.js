@@ -433,7 +433,7 @@ class View {
         const dollarAmount = document.querySelector(
           '.modal #dollar-amount',
         ).value;
-        handlerFunc(categoryID, itemID, categoryName, name, dollarAmount);
+        handlerFunc(itemID, categoryName, name, dollarAmount);
       }
     });
   }

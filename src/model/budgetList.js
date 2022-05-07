@@ -116,8 +116,7 @@ class BudgetList {
           }
         });
       }
-      delete itemFound.id;
-      this.add(itemFound, category);
+      this.add(itemFound, category ? category : undefined);
     }
     return 0;
   }
