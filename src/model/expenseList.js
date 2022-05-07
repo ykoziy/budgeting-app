@@ -17,16 +17,6 @@ class ExpenseList extends BudgetList {
       return 0;
     }
   }
-
-  deleteCategoryID(categoryID) {
-    for (const prop in this.items) {
-      if (this.items[prop].id === categoryID) {
-        delete this.items[prop];
-        return true;
-      }
-    }
-    return false;
-  }
 }
 
 export default ExpenseList;
