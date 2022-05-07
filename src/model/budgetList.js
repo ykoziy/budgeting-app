@@ -1,3 +1,5 @@
+import uniqid from 'uniqid';
+
 class BudgetList {
   constructor() {
     this.items = {};
@@ -5,9 +7,9 @@ class BudgetList {
 
   add(item, category = 'other') {
     if (!this.items.hasOwnProperty(category)) {
-      this.items[category] = [item];
+      this.items[category] = { id: uniqid(), items: [item] };
     } else {
-      this.items[category].push(item);
+      this.items[category].items.push(item);
     }
   }
 
@@ -18,7 +20,7 @@ class BudgetList {
   getByID(id) {
     let itemFound;
     for (const prop in this.items) {
-      const itemArray = this.items[prop];
+      const itemArray = this.items[prop].items;
       itemArray.forEach((item) => {
         if (item.id === id) {
           itemFound = item;
@@ -28,18 +30,22 @@ class BudgetList {
     return itemFound;
   }
 
-  getCategoryItems(category) {
+  getCategory(category) {
     return this.items[category];
   }
 
+  getCategoryItems(category) {
+    return this.items[category].items;
+  }
+
   getByCategoryIndex(category, index) {
-    return this.items[category][index];
+    return this.items[category].items[index];
   }
 
   sum() {
     let sum = 0;
     for (const key in this.items) {
-      this.items[key].forEach((element) => {
+      this.items[key].items.forEach((element) => {
         sum += element.money;
       });
     }
@@ -48,7 +54,7 @@ class BudgetList {
 
   edit(id, newData) {
     for (const prop in this.items) {
-      const itemArray = this.items[prop];
+      const itemArray = this.items[prop].items;
       itemArray.every((item) => {
         if (item.id === id) {
           if (newData.hasOwnProperty('description')) {
@@ -76,13 +82,13 @@ class BudgetList {
   delete(category, id) {
     let isDeleted = false;
     if (this.items.hasOwnProperty(category)) {
-      this.items[category].forEach((item, index) => {
+      this.items[category].items.forEach((item, index) => {
         if (item.getId() === id) {
-          this.items[category].splice(index, 1);
+          this.items[category].items.splice(index, 1);
           isDeleted = true;
         }
       });
-      if (this.items[category].length == 0) {
+      if (this.items[category].items.length == 0) {
         delete this.items[category];
       }
     }

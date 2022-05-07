@@ -7,7 +7,7 @@ class ExpenseList extends BudgetList {
 
   sumCategory(category) {
     if (this.items.hasOwnProperty(category)) {
-      const expensesArray = this.items[category];
+      const expensesArray = this.items[category].items;
       let sum = 0;
       expensesArray.forEach((expense) => {
         sum += expense.money;
@@ -18,13 +18,14 @@ class ExpenseList extends BudgetList {
     }
   }
 
-  deleteCategory(category) {
-    if (this.items.hasOwnProperty(category)) {
-      delete this.items[category];
-      return true;
-    } else {
-      return false;
+  deleteCategoryID(categoryID) {
+    for (const prop in this.items) {
+      if (this.items[prop].id === categoryID) {
+        delete this.items[prop];
+        return true;
+      }
     }
+    return false;
   }
 }
 
