@@ -63,14 +63,23 @@ class Model {
 
   editExpense(id, newData) {
     this.expenses.edit(id, newData);
+    if (this.onBudgetListChanged) {
+      this.onBudgetListChanged();
+    }
   }
 
   editIncome(id, newData) {
     this.incomes.edit(id, newData);
+    if (this.onBudgetListChanged) {
+      this.onBudgetListChanged();
+    }
   }
 
   renameCategory(oldName, newName) {
     this.expenses.renameCategory(oldName, newName);
+    if (this.onBudgetListChanged) {
+      this.onBudgetListChanged();
+    }
   }
 }
 
