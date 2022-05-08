@@ -2,8 +2,8 @@ import Modal from './modal';
 import DOM from '../domutil';
 
 class DeleteModal extends Modal {
-  constructor() {
-    super();
+  constructor(data, category, categoryID) {
+    super(data, category, categoryID);
   }
 
   create() {

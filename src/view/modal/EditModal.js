@@ -1,7 +1,7 @@
 import Modal from './modal';
 import DOM from '../domutil';
 
-class AddModal extends Modal {
+class EditModal extends Modal {
   constructor(data, category, categoryID) {
     super(data, category, categoryID);
   }
@@ -41,7 +41,10 @@ class AddModal extends Modal {
     const modalTitle = DOM.createElement('h1');
 
     if (this.currentView === 'expense') {
-      modalTitle.innerText = 'Adding expense';
+      modalTitle.innerText = 'Editing expense';
+      categoryInput.value = this.category;
+      nameInput.value = this.data.title;
+      dollarAmountInput.value = this.data.money;
       modalForm.append(
         modalTitle,
         labelCat,
@@ -52,7 +55,9 @@ class AddModal extends Modal {
         dollarAmountInput,
       );
     } else {
-      modalTitle.innerText = 'Adding income';
+      modalTitle.innerText = 'Editing income';
+      nameInput.value = this.data.title;
+      dollarAmountInput.value = this.data.money;
       modalForm.append(
         modalTitle,
         labelName,
@@ -66,10 +71,13 @@ class AddModal extends Modal {
     cancelButton.setAttribute('type', 'button');
     cancelButton.innerText = 'Cancel';
 
-    let addEditButton = DOM.createElement('button', 'add-btn');
-    addEditButton.setAttribute('value', 'add');
-    addEditButton.innerText = 'Add';
-
+    let addEditButton = DOM.createElement('button', 'save-btn');
+    addEditButton.setAttribute('value', 'edit');
+    addEditButton.innerText = 'Save';
+    addEditButton.dataset.id = this.data.id;
+    if (this.categoryID) {
+      addEditButton.dataset.categoryId = this.categoryID;
+    }
     addEditButton.setAttribute('type', 'submit');
 
     modalBottom.append(cancelButton, addEditButton);
@@ -78,4 +86,4 @@ class AddModal extends Modal {
   }
 }
 
-export default AddModal;
+export default EditModal;

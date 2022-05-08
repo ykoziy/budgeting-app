@@ -1,8 +1,7 @@
 class Modal {
   #currentView;
 
-  constructor(type, data, category, categoryID, modalContainer) {
-    this.type = type;
+  constructor(data, category, categoryID) {
     this.data = data;
     this.category = category;
     this.categoryID = categoryID;
