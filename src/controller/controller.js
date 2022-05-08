@@ -1,3 +1,5 @@
+import Modal from '../view/modal/modal';
+
 class Controller {
   constructor(model, view) {
     this.model = model;
@@ -14,7 +16,7 @@ class Controller {
     this.view.setAddItem(this.handleAddItem);
     this.view.setAddBudgetItemSave(this.handleAddBudgetItemSave);
     this.view.setEditBudgetItemSave(this.handleEditItemSave);
-    this.view.setModalCancel(this.handleCancelModal);
+    Modal.setModalCancel(this.handleCancelModal);
   }
 
   // links model and view
@@ -97,13 +99,12 @@ class Controller {
       });
       this.model.changeItemCategory(categoryName, itemID);
     }
-    this.view.removeModal();
+    Modal.remove();
   };
 
   handleAddBudgetItemSave = (categoryName, name, dollarAmount) => {
     if (this.currentView === 'income') {
       this.model.addIncome(name, Number(dollarAmount));
-      this.view.removeModal();
     } else if (this.currentView === 'expense') {
       if (categoryName) {
         this.model.addExpense(name, Number(dollarAmount), categoryName);
@@ -111,12 +112,12 @@ class Controller {
         this.model.addExpense(name, Number(dollarAmount));
       }
 
-      this.view.removeModal();
+      Modal.remove();
     }
   };
 
   handleCancelModal = () => {
-    this.view.removeModal();
+    Modal.remove();
   };
 }
 
