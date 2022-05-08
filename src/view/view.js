@@ -1,5 +1,6 @@
 import PieChart from './piechart';
 import DOM from './domutil';
+import ModalFactory from './modal/modalFactory';
 
 class View {
   constructor() {
@@ -75,15 +76,23 @@ class View {
     );
     document.body.append(modalContainer);
 
-    let modal;
-    if (type === 'add' || type === 'edit') {
+    let modalFactory = new ModalFactory();
+    let modal = modalFactory.createModal(
+      type,
+      data,
+      category,
+      categoryID,
+      modalContainer,
+    );
+    modal.currentView = this.currentView;
+    /*     if (type === 'add' || type === 'edit') {
       modal = this.#createAddEditModal(type, data, category, categoryID);
     } else if (type === 'delete') {
       modal = this.#createDeleteModal();
-    }
-    modalContainer.append(modal);
+    } */
+    modalContainer.append(modal.create());
   }
-
+  /// remove modal in separate class now..
   removeModal() {
     const modal = document.querySelector('#modal-container');
     modal.remove();
@@ -188,7 +197,7 @@ class View {
     modalForm.append(modalBottom);
     return modal;
   }
-
+  /// in separate class now
   #createDeleteModal() {
     const modal = DOM.createElement('div', 'modal');
 
@@ -434,17 +443,6 @@ class View {
           '.modal #dollar-amount',
         ).value;
         handlerFunc(itemID, categoryName, name, dollarAmount);
-      }
-    });
-  }
-
-  setModalCancel(handlerFunc) {
-    document.body.addEventListener('click', (evt) => {
-      if (
-        evt.target.classList.contains('cancel-btn') &&
-        evt.target.parentElement.classList.contains('modal-bottom')
-      ) {
-        handlerFunc();
       }
     });
   }
