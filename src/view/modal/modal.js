@@ -30,6 +30,18 @@ class Modal {
       }
     });
   }
+
+  static setModalDeleteItem(handlerFunc) {
+    document.body.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+      const submitType = document.activeElement.value;
+      if (submitType === 'delete') {
+        const categoryID = document.activeElement.dataset.categoryId;
+        const itemID = document.activeElement.dataset.id;
+        handlerFunc(categoryID, itemID);
+      }
+    });
+  }
 }
 
 export default Modal;

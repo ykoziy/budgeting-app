@@ -9,7 +9,7 @@ class ModalFactory {
     } else if (type === 'edit') {
       return new EditModal(data, category, categoryID);
     } else if (type === 'delete') {
-      return new DeleteModal();
+      return new DeleteModal(data, category, categoryID);
     }
     return null;
   }

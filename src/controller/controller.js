@@ -17,6 +17,7 @@ class Controller {
     this.view.setAddBudgetItemSave(this.handleAddBudgetItemSave);
     this.view.setEditBudgetItemSave(this.handleEditItemSave);
     Modal.setModalCancel(this.handleCancelModal);
+    Modal.setModalDeleteItem(this.handleDeleteBudgetItem);
   }
 
   // links model and view
@@ -65,11 +66,21 @@ class Controller {
     this.view.displayModal('add');
   };
 
-  handleDeleteItem = (category, id) => {
+  handleDeleteItem = (categoryID, id) => {
     if (this.currentView === 'income') {
-      this.model.deleteIncome(category, id);
+      this.view.displayModal(
+        'delete',
+        this.model.incomes.getByID(id),
+        undefined,
+        categoryID,
+      );
     } else if (this.currentView === 'expense') {
-      this.model.deleteExpense(category, id);
+      this.view.displayModal(
+        'delete',
+        this.model.expenses.getByID(id),
+        undefined,
+        categoryID,
+      );
     }
   };
 
@@ -114,6 +125,15 @@ class Controller {
 
       Modal.remove();
     }
+  };
+
+  handleDeleteBudgetItem = (categoryID, itemID) => {
+    if (this.currentView === 'income') {
+      this.model.deleteIncome(categoryID, itemID);
+    } else if (this.currentView === 'expense') {
+      this.model.deleteExpense(categoryID, itemID);
+    }
+    Modal.remove();
   };
 
   handleCancelModal = () => {

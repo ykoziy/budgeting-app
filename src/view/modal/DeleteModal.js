@@ -9,23 +9,28 @@ class DeleteModal extends Modal {
   create() {
     const modal = DOM.createElement('div', 'modal');
 
-    const modalTop = DOM.createElement('div', 'modal-top');
+    const modalForm = DOM.createElement('form', 'modal-top');
     const modalBottom = DOM.createElement('div', 'modal-bottom');
-    modal.append(modalTop);
-    modal.append(modalBottom);
+    modal.append(modalForm);
 
     const confirmationMsg = DOM.createElement('p');
     confirmationMsg.innerText = 'Are you sure you want to delete?';
 
-    modalTop.append(confirmationMsg);
+    modalForm.append(confirmationMsg);
 
     const cancelButton = DOM.createElement('button', 'cancel-btn');
+    cancelButton.setAttribute('type', 'button');
     cancelButton.innerText = 'Cancel';
 
     const yesBtn = DOM.createElement('button', 'yes-btn');
+    yesBtn.setAttribute('value', 'delete');
+    yesBtn.setAttribute('type', 'submit');
+    yesBtn.dataset.id = this.data.id;
+    yesBtn.dataset.categoryId = this.categoryID;
     yesBtn.innerText = 'Yes';
 
     modalBottom.append(cancelButton, yesBtn);
+    modalForm.append(modalBottom);
     return modal;
   }
 }

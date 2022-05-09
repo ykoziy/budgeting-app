@@ -94,12 +94,12 @@ class View {
     return button;
   }
 
-  #attachItemHandler(node, eventHandler) {
+  #attachDeleteHandler(node, eventHandler) {
     node.addEventListener('click', (evt) => {
       const parent = evt.currentTarget.parentElement;
-      let category = parent.dataset.category;
       let id = parent.dataset.id;
-      eventHandler(category, id);
+      let categoryID = parent.dataset.categoryId;
+      eventHandler(categoryID, id);
     });
   }
 
@@ -161,7 +161,7 @@ class View {
       listItem.dataset.categoryId = categoryID;
       const deleteButton = this.#createDeleteItemButton();
       const editButton = this.#createEditItemButton();
-      this.#attachItemHandler(deleteButton, deleteHandler);
+      this.#attachDeleteHandler(deleteButton, deleteHandler);
       this.#attachEditHandler(editButton, editHandler);
 
       listItem.append(editButton, deleteButton);
@@ -177,7 +177,7 @@ class View {
       this.budgetList.removeChild(this.budgetList.firstChild);
     }
 
-    const income = incomes.get()['income'];
+    const income = incomes.getCategory('income');
     let incomeList;
 
     if (!income) {
@@ -187,10 +187,12 @@ class View {
       incomeList = income.items;
     }
 
+    const categoryID = incomes.getCategory('income').id;
     incomeList.forEach((income) => {
       const listItem = DOM.createElement('li');
       listItem.dataset.category = 'income';
       listItem.dataset.id = income.getId();
+      listItem.dataset.categoryId = categoryID;
       const categoryText = DOM.createElement('p', 'budget-item-name');
       categoryText.innerText = income.title;
 
@@ -199,7 +201,7 @@ class View {
 
       const deleteButton = this.#createDeleteItemButton();
       const editButton = this.#createEditItemButton();
-      this.#attachItemHandler(deleteButton, deleteHandler);
+      this.#attachDeleteHandler(deleteButton, deleteHandler);
       this.#attachEditHandler(editButton, editHandler);
 
       listItem.append(categoryText, incomeText, editButton, deleteButton);
