@@ -89,17 +89,17 @@ class BudgetList {
     return false;
   }
 
-  delete(category, id) {
+  delete(categoryID, itemID) {
     let isDeleted = false;
-    if (this.items.hasOwnProperty(category)) {
-      this.items[category].items.forEach((item, index) => {
-        if (item.getId() === id) {
-          this.items[category].items.splice(index, 1);
-          isDeleted = true;
-        }
-      });
-      if (this.items[category].items.length == 0) {
-        delete this.items[category];
+    for (const category in this.items) {
+      if (this.items[category].id === categoryID) {
+        const itemArray = this.items[category].items;
+        itemArray.forEach((item, index) => {
+          if (item.id === itemID) {
+            this.items[category].items.splice(index, 1);
+            isDeleted = true;
+          }
+        });
       }
     }
     return isDeleted;

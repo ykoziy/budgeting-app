@@ -47,15 +47,15 @@ class Model {
     }
   }
 
-  deleteIncome(category, id) {
-    this.incomes.delete(category, id);
+  deleteIncome(categoryID, id) {
+    this.incomes.delete(categoryID, id);
     if (this.onBudgetListChanged) {
       this.onBudgetListChanged();
     }
   }
 
-  deleteExpense(category, id) {
-    this.expenses.delete(category, id);
+  deleteExpense(categoryID, id) {
+    this.expenses.delete(categoryID, id);
     if (this.onBudgetListChanged) {
       this.onBudgetListChanged();
     }

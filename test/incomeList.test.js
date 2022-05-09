@@ -50,7 +50,9 @@ describe('Testing IncomeList class', () => {
     incomes.add(incomeA);
     incomes.add(incomeB);
 
-    incomes.delete('income', 'u123z');
+    const categoryID = incomes.getCategory('income').id;
+
+    incomes.delete(categoryID, 'u123z');
     expect(incomes.delete('income', 'u123z')).toBe(false);
     expect(incomes.get()['income'].items.length).toEqual(2);
   });
@@ -63,13 +65,15 @@ describe('Testing IncomeList class', () => {
     const incomes = new IncomeList();
     incomes.add(incomeA);
     incomes.add(incomeB);
+    const categoryID = incomes.getCategory('income').id;
 
-    incomes.delete('income', deletionID);
+    incomes.delete(categoryID, deletionID);
 
     expect(incomes.get()['income'].items.length).toEqual(1);
+    expect(incomes.get()['income'].items[0]).toBe(incomeA);
   });
 
-  it.skip('should get income item by ID', () => {
+  it('should get income item by ID', () => {
     const incomeA = new Income('full-time job', 32400);
     const incomeB = new Income('crypto', 2000);
     const incomeID = incomeA.getId();
