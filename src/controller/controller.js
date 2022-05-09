@@ -38,6 +38,7 @@ class Controller {
     }
   };
 
+  // Event handler for the income nav button
   handleIncomeNav = () => {
     this.currentView = 'income';
     this.view.displayIncomes(
@@ -47,12 +48,14 @@ class Controller {
     );
   };
 
+  // Event handler for the expense nav button
   handleExpenseNav = () => {
     this.currentView = 'expense';
     this.view.displayExpenses(this.model.expenses);
     this.view.setCategoryOpen(this.handleCategoryOpen);
   };
 
+  // Event handler for clicking on category
   handleCategoryOpen = (categoryName) => {
     this.view.openCategory(
       categoryName,
@@ -62,10 +65,12 @@ class Controller {
     );
   };
 
+  // Event handler for add button
   handleAddItem = () => {
     this.view.displayModal('add');
   };
 
+  // Event handler for delete button
   handleDeleteItem = (categoryID, id) => {
     if (this.currentView === 'income') {
       this.view.displayModal(
@@ -84,6 +89,7 @@ class Controller {
     }
   };
 
+  // Event handler for delete button
   handleEditItem = (category, id, categoryID) => {
     if (this.currentView === 'income') {
       this.view.displayModal('edit', this.model.incomes.getByID(id));
@@ -97,6 +103,7 @@ class Controller {
     }
   };
 
+  // Event handler for updating model when editing item
   handleEditItemSave = (itemID, categoryName, name, dollarAmount) => {
     if (this.currentView === 'income') {
       this.model.editIncome(itemID, {
@@ -113,6 +120,7 @@ class Controller {
     Modal.remove();
   };
 
+  // Event handler for updating model when adding item
   handleAddBudgetItemSave = (categoryName, name, dollarAmount) => {
     if (this.currentView === 'income') {
       this.model.addIncome(name, Number(dollarAmount));
@@ -127,6 +135,7 @@ class Controller {
     }
   };
 
+  // Event handler for updating model when deleting item
   handleDeleteBudgetItem = (categoryID, itemID) => {
     if (this.currentView === 'income') {
       this.model.deleteIncome(categoryID, itemID);
@@ -136,6 +145,7 @@ class Controller {
     Modal.remove();
   };
 
+  // Event handler for canceling modal
   handleCancelModal = () => {
     Modal.remove();
   };
