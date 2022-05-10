@@ -94,12 +94,21 @@ class View {
     return button;
   }
 
-  #attachDeleteHandler(node, eventHandler) {
+  #attachDeleteItemHandler(node, eventHandler) {
     node.addEventListener('click', (evt) => {
       const parent = evt.currentTarget.parentElement;
       let id = parent.dataset.id;
       let categoryID = parent.dataset.categoryId;
       eventHandler(categoryID, id);
+    });
+  }
+
+  #attachDeleteCategoryHandler(node, eventHandler) {
+    node.addEventListener('click', (evt) => {
+      evt.stopPropagation();
+      const parent = evt.currentTarget.parentElement;
+      let categoryID = parent.dataset.categoryId;
+      eventHandler(categoryID);
     });
   }
 
@@ -123,7 +132,7 @@ class View {
     return item;
   }
 
-  displayExpenses(expenses) {
+  displayExpenses(expenses, deleteCategoryHandler) {
     this.#setActiveNav(1);
     this.currentView = 'expense';
     while (this.budgetList.firstChild) {
@@ -142,12 +151,17 @@ class View {
         category,
         expenses.sumCategory(category),
       );
+      listItem.dataset.categoryId = expenses.getCategory(category).id;
+      const deleteButton = this.#createDeleteItemButton();
+      this.#attachDeleteCategoryHandler(deleteButton, deleteCategoryHandler);
+      listItem.append(deleteButton);
+
       this.budgetList.append(listItem);
     }
     this.#setFooter('Total Expenses:', expenses.sum());
   }
 
-  openCategory(categoryName, expenses, deleteHandler, editHandler) {
+  openCategory(categoryName, expenses, deleteItemHandler, editItemHandler) {
     while (this.budgetList.firstChild) {
       this.budgetList.removeChild(this.budgetList.firstChild);
     }
@@ -161,8 +175,8 @@ class View {
       listItem.dataset.categoryId = categoryID;
       const deleteButton = this.#createDeleteItemButton();
       const editButton = this.#createEditItemButton();
-      this.#attachDeleteHandler(deleteButton, deleteHandler);
-      this.#attachEditHandler(editButton, editHandler);
+      this.#attachDeleteItemHandler(deleteButton, deleteItemHandler);
+      this.#attachEditHandler(editButton, editItemHandler);
 
       listItem.append(editButton, deleteButton);
       this.budgetList.append(listItem);
@@ -170,7 +184,7 @@ class View {
     this.#setFooter('Total:', expenses.sumCategory(categoryName));
   }
 
-  displayIncomes(incomes, deleteHandler, editHandler) {
+  displayIncomes(incomes, deleteItemHandler, editItemHandler) {
     this.#setActiveNav(2);
     this.currentView = 'income';
     while (this.budgetList.firstChild) {
@@ -201,8 +215,8 @@ class View {
 
       const deleteButton = this.#createDeleteItemButton();
       const editButton = this.#createEditItemButton();
-      this.#attachDeleteHandler(deleteButton, deleteHandler);
-      this.#attachEditHandler(editButton, editHandler);
+      this.#attachDeleteItemHandler(deleteButton, deleteItemHandler);
+      this.#attachEditHandler(editButton, editItemHandler);
 
       listItem.append(categoryText, incomeText, editButton, deleteButton);
 

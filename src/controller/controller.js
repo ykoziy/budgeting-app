@@ -25,7 +25,7 @@ class Controller {
 
   onBudgetListChange = () => {
     if (this.currentView === 'expense') {
-      this.view.displayExpenses(this.model.expenses);
+      this.view.displayExpenses(this.model.expenses, this.handleDeleteCategory);
       this.view.setCategoryOpen(this.handleCategoryOpen);
       this.view.displayChart(this.model.expenses, this.model.incomes);
     } else {
@@ -51,7 +51,7 @@ class Controller {
   // Event handler for the expense nav button
   handleExpenseNav = () => {
     this.currentView = 'expense';
-    this.view.displayExpenses(this.model.expenses);
+    this.view.displayExpenses(this.model.expenses, this.handleDeleteCategory);
     this.view.setCategoryOpen(this.handleCategoryOpen);
   };
 
@@ -87,6 +87,11 @@ class Controller {
         categoryID,
       );
     }
+  };
+
+  // Event handler for delete category button
+  handleDeleteCategory = (categoryID) => {
+    console.log(`deleting category with ID: ${categoryID}`);
   };
 
   // Event handler for delete button
