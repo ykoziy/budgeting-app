@@ -2,8 +2,12 @@ import Modal from './modal';
 import DOM from '../domutil';
 
 class AddModal extends Modal {
-  constructor(data, category, categoryID) {
-    super(data, category, categoryID);
+  constructor(data, category, categoryID, callback) {
+    super(data, category, categoryID, callback);
+  }
+
+  #onAddClick(categoryName, itemName, dollarAmount) {
+    this.callback(categoryName, itemName, dollarAmount);
   }
 
   create() {
@@ -66,13 +70,24 @@ class AddModal extends Modal {
     cancelButton.setAttribute('type', 'button');
     cancelButton.innerText = 'Cancel';
 
-    let addEditButton = DOM.createElement('button', 'add-btn');
-    addEditButton.setAttribute('value', 'add');
-    addEditButton.innerText = 'Add';
+    let addButton = DOM.createElement('button', 'add-btn');
+    addButton.setAttribute('value', 'add');
+    addButton.innerText = 'Add';
 
-    addEditButton.setAttribute('type', 'submit');
+    addButton.setAttribute('type', 'submit');
 
-    modalBottom.append(cancelButton, addEditButton);
+    modalForm.addEventListener('submit', (evt) => {
+      if (modalForm.checkValidity()) {
+        evt.preventDefault;
+        this.#onAddClick(
+          categoryInput.value,
+          nameInput.value,
+          dollarAmountInput.value,
+        );
+      }
+    });
+
+    modalBottom.append(cancelButton, addButton);
     modalForm.append(modalBottom);
     return modal;
   }

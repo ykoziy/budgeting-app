@@ -14,7 +14,7 @@ class Controller {
     this.view.setIncomeNav(this.handleIncomeNav);
     this.view.setExpenseNav(this.handleExpenseNav);
     this.view.setAddItem(this.handleAddItem);
-    this.view.setAddBudgetItemSave(this.handleAddBudgetItemSave);
+    //this.view.setAddBudgetItemSave(this.handleAddBudgetItemSave);
     this.view.setEditBudgetItemSave(this.handleEditItemSave);
     Modal.setModalCancel(this.handleCancelModal);
   }
@@ -66,7 +66,13 @@ class Controller {
 
   // Event handler for add button
   handleAddItem = () => {
-    this.view.displayModal('add');
+    this.view.displayModal(
+      'add',
+      undefined,
+      undefined,
+      undefined,
+      this.handleAddBudgetItem,
+    );
   };
 
   // Event handler for delete button
@@ -127,7 +133,7 @@ class Controller {
   };
 
   // Event handler for updating model when adding item
-  handleAddBudgetItemSave = (categoryName, name, dollarAmount) => {
+  handleAddBudgetItem = (categoryName, name, dollarAmount) => {
     if (this.currentView === 'income') {
       this.model.addIncome(name, Number(dollarAmount));
     } else if (this.currentView === 'expense') {
@@ -136,7 +142,6 @@ class Controller {
       } else {
         this.model.addExpense(name, Number(dollarAmount));
       }
-
       Modal.remove();
     }
   };

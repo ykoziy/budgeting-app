@@ -5,7 +5,7 @@ import EditModal from './EditModal';
 class ModalFactory {
   createModal(type, data, category, categoryID, callback) {
     if (type === 'add') {
-      return new AddModal(data, category, categoryID);
+      return new AddModal(data, category, categoryID, callback);
     } else if (type === 'edit') {
       return new EditModal(data, category, categoryID);
     } else if (type === 'delete') {
