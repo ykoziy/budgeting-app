@@ -1,11 +1,10 @@
 class Modal {
   #currentView;
 
-  constructor(data, category, categoryID, callback) {
+  constructor(data, category, categoryID) {
     this.data = data;
     this.category = category;
     this.categoryID = categoryID;
-    this.callback = callback;
   }
 
   static remove() {

@@ -3,7 +3,8 @@ import DOM from '../domutil';
 
 class AddModal extends Modal {
   constructor(data, category, categoryID, callback) {
-    super(data, category, categoryID, callback);
+    super(data, category, categoryID);
+    this.callback = callback;
   }
 
   #onAddClick(categoryName, itemName, dollarAmount) {
