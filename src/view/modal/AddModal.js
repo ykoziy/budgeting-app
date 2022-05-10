@@ -78,7 +78,7 @@ class AddModal extends Modal {
 
     modalForm.addEventListener('submit', (evt) => {
       if (modalForm.checkValidity()) {
-        evt.preventDefault;
+        evt.preventDefault();
         this.#onAddClick(
           categoryInput.value,
           nameInput.value,
