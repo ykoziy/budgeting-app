@@ -292,44 +292,6 @@ class View {
       handlerFunc();
     });
   }
-
-  setAddBudgetItemSave(handlerFunc) {
-    document.body.addEventListener('submit', (evt) => {
-      evt.preventDefault();
-      const submitType = document.activeElement.value;
-      if (submitType === 'add') {
-        let categoryName = 'income';
-        if (this.currentView === 'expense') {
-          categoryName = document.querySelector('.modal #category-name').value;
-        }
-        const name = document.querySelector('.modal #name').value;
-        const dollarAmount = document.querySelector(
-          '.modal #dollar-amount',
-        ).value;
-        handlerFunc(categoryName, name, dollarAmount);
-      }
-    });
-  }
-
-  setEditBudgetItemSave(handlerFunc) {
-    document.body.addEventListener('submit', (evt) => {
-      evt.preventDefault();
-      const submitType = document.activeElement.value;
-      if (submitType === 'edit') {
-        let categoryName;
-        let categoryID = document.activeElement.dataset.categoryId;
-        const itemID = document.activeElement.dataset.id;
-        if (this.currentView === 'expense') {
-          categoryName = document.querySelector('.modal #category-name').value;
-        }
-        const name = document.querySelector('.modal #name').value;
-        const dollarAmount = document.querySelector(
-          '.modal #dollar-amount',
-        ).value;
-        handlerFunc(itemID, categoryName, name, dollarAmount);
-      }
-    });
-  }
 }
 
 export default View;
