@@ -7,7 +7,7 @@ class ModalFactory {
     if (type === 'add') {
       return new AddModal(data, category, categoryID, callback);
     } else if (type === 'edit') {
-      return new EditModal(data, category, categoryID);
+      return new EditModal(data, category, categoryID, callback);
     } else if (type === 'delete') {
       return new DeleteModal(data, category, categoryID, callback);
     }

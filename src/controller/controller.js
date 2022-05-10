@@ -14,8 +14,6 @@ class Controller {
     this.view.setIncomeNav(this.handleIncomeNav);
     this.view.setExpenseNav(this.handleExpenseNav);
     this.view.setAddItem(this.handleAddItem);
-    //this.view.setAddBudgetItemSave(this.handleAddBudgetItemSave);
-    this.view.setEditBudgetItemSave(this.handleEditItemSave);
     Modal.setModalCancel(this.handleCancelModal);
   }
 
@@ -104,13 +102,20 @@ class Controller {
   // Event handler for delete button
   handleEditItem = (category, id, categoryID) => {
     if (this.currentView === 'income') {
-      this.view.displayModal('edit', this.model.incomes.getByID(id));
+      this.view.displayModal(
+        'edit',
+        this.model.incomes.getByID(id),
+        undefined,
+        undefined,
+        this.handleEditItemSave,
+      );
     } else if (this.currentView === 'expense') {
       this.view.displayModal(
         'edit',
         this.model.expenses.getByID(id),
         category,
-        categoryID,
+        undefined,
+        this.handleEditItemSave,
       );
     }
   };

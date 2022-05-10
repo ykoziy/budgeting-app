@@ -2,8 +2,12 @@ import Modal from './modal';
 import DOM from '../domutil';
 
 class EditModal extends Modal {
-  constructor(data, category, categoryID) {
-    super(data, category, categoryID);
+  constructor(data, category, categoryID, callback) {
+    super(data, category, categoryID, callback);
+  }
+
+  #onItemSave(itemID, categoryName, itemName, dollarAmount) {
+    this.callback(itemID, categoryName, itemName, dollarAmount);
   }
 
   create() {
@@ -74,11 +78,19 @@ class EditModal extends Modal {
     let addEditButton = DOM.createElement('button', 'save-btn');
     addEditButton.setAttribute('value', 'edit');
     addEditButton.innerText = 'Save';
-    addEditButton.dataset.id = this.data.id;
-    if (this.categoryID) {
-      addEditButton.dataset.categoryId = this.categoryID;
-    }
     addEditButton.setAttribute('type', 'submit');
+
+    modalForm.addEventListener('submit', (evt) => {
+      if (modalForm.checkValidity()) {
+        evt.preventDefault();
+        this.#onItemSave(
+          this.data.id,
+          categoryInput.value,
+          nameInput.value,
+          dollarAmountInput.value,
+        );
+      }
+    });
 
     modalBottom.append(cancelButton, addEditButton);
     modalForm.append(modalBottom);
