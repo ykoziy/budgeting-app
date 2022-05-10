@@ -3,13 +3,13 @@ import AddModal from './AddModal';
 import EditModal from './EditModal';
 
 class ModalFactory {
-  createModal(type, data, category, categoryID) {
+  createModal(type, data, category, categoryID, callback) {
     if (type === 'add') {
       return new AddModal(data, category, categoryID);
     } else if (type === 'edit') {
       return new EditModal(data, category, categoryID);
     } else if (type === 'delete') {
-      return new DeleteModal(data, category, categoryID);
+      return new DeleteModal(data, category, categoryID, callback);
     }
     return null;
   }

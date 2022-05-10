@@ -68,6 +68,7 @@ class View {
     data = undefined,
     category = undefined,
     categoryID = undefined,
+    callback = undefined,
   ) {
     const modalContainer = DOM.createElement(
       'div',
@@ -77,7 +78,13 @@ class View {
     document.body.append(modalContainer);
 
     let modalFactory = new ModalFactory();
-    let modal = modalFactory.createModal(type, data, category, categoryID);
+    let modal = modalFactory.createModal(
+      type,
+      data,
+      category,
+      categoryID,
+      callback,
+    );
     modal.currentView = this.currentView;
     modalContainer.append(modal.create());
   }

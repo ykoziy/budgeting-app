@@ -1,10 +1,11 @@
 class Modal {
   #currentView;
 
-  constructor(data, category, categoryID) {
+  constructor(data, category, categoryID, callback) {
     this.data = data;
     this.category = category;
     this.categoryID = categoryID;
+    this.callback = callback;
   }
 
   static remove() {
@@ -27,18 +28,6 @@ class Modal {
         evt.target.parentElement.classList.contains('modal-bottom')
       ) {
         handlerFunc();
-      }
-    });
-  }
-
-  static setModalDeleteItem(handlerFunc) {
-    document.body.addEventListener('submit', (evt) => {
-      evt.preventDefault();
-      const submitType = document.activeElement.value;
-      if (submitType === 'delete') {
-        const categoryID = document.activeElement.dataset.categoryId;
-        const itemID = document.activeElement.dataset.id;
-        handlerFunc(categoryID, itemID);
       }
     });
   }

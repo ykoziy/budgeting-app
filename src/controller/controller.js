@@ -17,7 +17,6 @@ class Controller {
     this.view.setAddBudgetItemSave(this.handleAddBudgetItemSave);
     this.view.setEditBudgetItemSave(this.handleEditItemSave);
     Modal.setModalCancel(this.handleCancelModal);
-    Modal.setModalDeleteItem(this.handleDeleteBudgetItem);
   }
 
   // links model and view
@@ -78,6 +77,7 @@ class Controller {
         this.model.incomes.getByID(id),
         undefined,
         categoryID,
+        () => this.handleDeleteBudgetItem(categoryID, id),
       );
     } else if (this.currentView === 'expense') {
       this.view.displayModal(
@@ -85,6 +85,7 @@ class Controller {
         this.model.expenses.getByID(id),
         undefined,
         categoryID,
+        () => this.handleDeleteBudgetItem(categoryID, id),
       );
     }
   };
