@@ -88,6 +88,13 @@ class Model {
       this.onBudgetListChanged();
     }
   }
+
+  deleteCategory(categoryID) {
+    this.expenses.deleteCategoryID(categoryID);
+    if (this.onBudgetListChanged) {
+      this.onBudgetListChanged();
+    }
+  }
 }
 
 export default Model;

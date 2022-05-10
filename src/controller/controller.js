@@ -88,7 +88,9 @@ class Controller {
 
   // Event handler for delete category button
   handleDeleteCategory = (categoryID) => {
-    console.log(`deleting category with ID: ${categoryID}`);
+    this.view.displayModal('delete', undefined, undefined, categoryID, () =>
+      this.handleDeleteCategoryItem(categoryID),
+    );
   };
 
   // Event handler for delete button
@@ -150,6 +152,12 @@ class Controller {
     } else if (this.currentView === 'expense') {
       this.model.deleteExpense(categoryID, itemID);
     }
+    Modal.remove();
+  };
+
+  // Event handler for updating model when deleting category
+  handleDeleteCategoryItem = (categoryID) => {
+    this.model.deleteCategory(categoryID);
     Modal.remove();
   };
 
