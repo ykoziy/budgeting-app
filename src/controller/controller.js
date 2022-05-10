@@ -76,20 +76,12 @@ class Controller {
   // Event handler for delete button
   handleDeleteItem = (categoryID, id) => {
     if (this.currentView === 'income') {
-      this.view.displayModal(
-        'delete',
-        this.model.incomes.getByID(id),
-        undefined,
-        categoryID,
-        () => this.handleDeleteBudgetItem(categoryID, id),
+      this.view.displayModal('delete', undefined, undefined, categoryID, () =>
+        this.handleDeleteBudgetItem(categoryID, id),
       );
     } else if (this.currentView === 'expense') {
-      this.view.displayModal(
-        'delete',
-        this.model.expenses.getByID(id),
-        undefined,
-        categoryID,
-        () => this.handleDeleteBudgetItem(categoryID, id),
+      this.view.displayModal('delete', undefined, undefined, categoryID, () =>
+        this.handleDeleteBudgetItem(categoryID, id),
       );
     }
   };
