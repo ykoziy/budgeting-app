@@ -76,11 +76,11 @@ class Controller {
   // Event handler for delete button
   handleDeleteItem = (categoryID, id) => {
     if (this.currentView === 'income') {
-      this.view.displayModal('delete', undefined, undefined, categoryID, () =>
+      this.view.displayModal('delete', undefined, undefined, undefined, () =>
         this.handleDeleteBudgetItem(categoryID, id),
       );
     } else if (this.currentView === 'expense') {
-      this.view.displayModal('delete', undefined, undefined, categoryID, () =>
+      this.view.displayModal('delete', undefined, undefined, undefined, () =>
         this.handleDeleteBudgetItem(categoryID, id),
       );
     }
@@ -88,7 +88,7 @@ class Controller {
 
   // Event handler for delete category button
   handleDeleteCategory = (categoryID) => {
-    this.view.displayModal('delete', undefined, undefined, categoryID, () =>
+    this.view.displayModal('delete', undefined, undefined, undefined, () =>
       this.handleDeleteCategoryItem(categoryID),
     );
   };
