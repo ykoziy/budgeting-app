@@ -141,8 +141,8 @@ class Controller {
       } else {
         this.model.addExpense(name, Number(dollarAmount));
       }
-      Modal.remove();
     }
+    Modal.remove();
   };
 
   // Event handler for updating model when deleting item
