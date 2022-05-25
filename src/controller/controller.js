@@ -22,7 +22,11 @@ class Controller {
 
   onBudgetListChange = () => {
     if (this.currentView === 'expense') {
-      this.view.displayExpenses(this.model.expenses, this.handleDeleteCategory);
+      this.view.displayExpenses(
+        this.model.expenses,
+        this.handleDeleteCategory,
+        this.handleEditCategory,
+      );
       this.view.setCategoryOpen(this.handleCategoryOpen);
       this.view.displayChart(this.model.expenses, this.model.incomes);
     } else {
@@ -93,7 +97,18 @@ class Controller {
     );
   };
 
-  // Event handler for delete button
+  // Event handler for edit category button
+  handleEditCategory = (categoryID) => {
+    this.view.displayModal(
+      'edit category',
+      this.model.expenses.getCategoryByID(categoryID),
+      undefined,
+      undefined,
+      this.handleEditCategoryItemSave,
+    );
+  };
+
+  // Event handler for edit item button
   handleEditItem = (category, id, categoryID) => {
     if (this.currentView === 'income') {
       this.view.displayModal(
@@ -158,6 +173,12 @@ class Controller {
   // Event handler for updating model when deleting category
   handleDeleteCategoryItem = (categoryID) => {
     this.model.deleteCategory(categoryID);
+    Modal.remove();
+  };
+
+  // Event handler for updating model when editing category
+  handleEditCategoryItemSave = (categoryID, newName) => {
+    this.model.renameCategory(categoryID, newName);
     Modal.remove();
   };
 

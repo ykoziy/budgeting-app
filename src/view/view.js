@@ -119,6 +119,15 @@ class View {
     });
   }
 
+  #attachEditCategoryHandler(node, eventHandler) {
+    node.addEventListener('click', (evt) => {
+      evt.stopPropagation();
+      const parent = evt.currentTarget.parentElement;
+      let categoryID = parent.dataset.categoryId;
+      eventHandler(categoryID);
+    });
+  }
+
   #attachEditHandler(node, eventHandler) {
     node.addEventListener('click', (evt) => {
       const parent = evt.currentTarget.parentElement;
@@ -139,7 +148,7 @@ class View {
     return item;
   }
 
-  displayExpenses(expenses, deleteCategoryHandler) {
+  displayExpenses(expenses, deleteCategoryHandler, editItemHandler) {
     this.#setActiveNav(1);
     this.currentView = 'expense';
     while (this.budgetList.firstChild) {
@@ -160,9 +169,11 @@ class View {
       );
       listItem.dataset.categoryId = expenses.getCategory(category).id;
       const deleteButton = this.#createDeleteItemButton();
+      const editButton = this.#createEditItemButton();
+      this.#attachEditCategoryHandler(editButton, editItemHandler);
       this.#attachDeleteCategoryHandler(deleteButton, deleteCategoryHandler);
-      listItem.append(deleteButton);
 
+      listItem.append(editButton, deleteButton);
       this.budgetList.append(listItem);
     }
     this.#setFooter('Total Expenses:', expenses.sum());
