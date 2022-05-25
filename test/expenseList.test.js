@@ -146,4 +146,19 @@ describe('Testing ExpenseList class', () => {
 
     expect(expenses.getByID(expenseID).money).toEqual(560.1);
   });
+
+  it('should get category by ID', () => {
+    const expenseA = new Expense('gas', 35.78);
+    const expenseB = new Expense('food', 560.1);
+    const expenseC = new Expense('ski lessons', 250.45);
+
+    const expenses = new ExpenseList();
+    expenses.add(expenseA);
+    expenses.add(expenseB);
+    expenses.add(expenseC, 'fun');
+
+    const categoryID = expenses.getCategory('fun').id;
+    expect(expenses.getCategoryByID(categoryID).category).toEqual('fun');
+    expect(expenses.getCategoryByID(categoryID).id).toEqual(categoryID);
+  });
 });
