@@ -1,4 +1,5 @@
 import * as d3 from 'd3';
+const backgroundColor = '#f0f7f4';
 
 class PieChart {
   constructor(chartContainer, data = null) {
@@ -29,7 +30,7 @@ class PieChart {
       .attr('height', height)
       .attr(
         'style',
-        'max-width: 100%; height: auto; height: intrinsic; background-color: white;',
+        `max-width: 100%; height: auto; height: intrinsic; background-color: ${backgroundColor};`,
       );
 
     var g = svg

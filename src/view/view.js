@@ -91,13 +91,13 @@ class View {
 
   #createDeleteItemButton() {
     const button = DOM.createElement('button', 'delete-item-btn');
-    button.innerText = 'X';
+    button.innerHTML = '<i class="fa-regular fa-trash-can fa-lg"></i>';
     return button;
   }
 
   #createEditItemButton() {
     const button = DOM.createElement('button', 'edit-item-btn');
-    button.innerText = 'Edit';
+    button.innerHTML = '<i class="fa-regular fa-pen-to-square fa-lg"></i>';
     return button;
   }
 

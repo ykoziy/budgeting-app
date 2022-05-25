@@ -4,33 +4,48 @@
   box-sizing: border-box;
 }
 
+$main-bg: #b3bfb8;
+$secondary-bg: #a2e3c4;
+$font-color: black;
+
 html {
   font-size: 62.5%;
 }
 
-h1 {
-  font-size: 2.5rem;
+header {
+  h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: $font-color;
+  }
+  padding-bottom: 15px;
+  padding-top: 15px;
 }
 
 body {
   width: 100vw;
   height: 100vh;
-  background-color: seagreen;
+  background-color: $main-bg;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 main {
-  background-color: peru;
+  background-color: $secondary-bg;
   width: 1080px;
-  height: 900px;
+  height: 100%;
   display: flex;
   position: relative;
+  color: $font-color;
+  font-size: 1.4rem;
+}
+
+button {
+  cursor: pointer;
 }
 
 #modal-container {
-  /*   display: none; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -43,11 +58,15 @@ main {
   .modal {
     min-width: 150px;
     min-height: 150px;
-    background-color: whitesmoke;
+    background-color: $secondary-bg;
     display: grid;
     gap: 10px;
     padding: 25px;
     grid-template-rows: auto auto;
+    color: $font-color;
+    font-size: 1.4rem;
+    border-radius: 10px;
+    box-shadow: 0px 0px 11px 5px rgba(60, 73, 63, 0.61);
 
     #category-name,
     #name {
@@ -69,28 +88,37 @@ main {
         height: fit-content;
       }
     }
+
+    input {
+      font-size: 1.4rem;
+    }
   }
 }
 
 #left-panel {
   flex-grow: 1;
-  border-right: 3px dotted black;
+  border-right: 1px solid black;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 15px;
+
   nav {
     display: flex;
     width: 100%;
+    gap: 25px;
+
     .nav-btn {
       display: flex;
       height: 50px;
       justify-content: center;
       align-items: center;
-      border: 2px solid black;
+      border: 1px solid black;
+      border-radius: 5px;
     }
 
     .nav-btn:hover {
-      background-color: lightgray;
+      background-color: #7e8d85;
     }
 
     .nav-btn:nth-of-type(1) {
@@ -105,12 +133,21 @@ main {
     flex-grow: 1;
     width: 100%;
     padding: 15px;
+
+    button {
+      padding: 4px;
+      border: 1px solid gray;
+      border-radius: 4px;
+    }
+
+    .delete-item-btn {
+      background-color: tomato;
+    }
   }
 
   footer {
     height: 50px;
     width: 100%;
-    border-top: 2px solid black;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -127,7 +164,7 @@ main {
   }
 
   li:hover {
-    border-bottom: 2px solid green;
+    border-bottom: 2px solid orange;
   }
 }
 
