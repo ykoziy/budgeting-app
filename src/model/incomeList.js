@@ -8,10 +8,6 @@ class IncomeList extends BudgetList {
   add(income) {
     super.add(income, 'income');
   }
-
-  getByIndex(index) {
-    return super.getByCategoryIndex('income', index);
-  }
 }
 
 export default IncomeList;

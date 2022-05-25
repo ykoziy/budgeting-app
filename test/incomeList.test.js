@@ -13,17 +13,6 @@ describe('Testing IncomeList class', () => {
     expect(incomes.get()['income'].items.length).toEqual(2);
   });
 
-  it('should allow getting income by index', () => {
-    const incomeA = new Income('full-time job', 32400);
-    const incomeB = new Income('crypto', 2000);
-
-    const incomes = new IncomeList();
-    incomes.add(incomeA);
-    incomes.add(incomeB);
-
-    expect(incomes.getByIndex(0).money).toEqual(32400);
-  });
-
   it('sum of 0 items should be 0', () => {
     const incomes = new IncomeList();
     expect(incomes.sum()).toEqual(0);

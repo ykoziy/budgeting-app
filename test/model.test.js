@@ -12,7 +12,7 @@ describe('Testing the Model', () => {
 
   it('should be able to add an income', () => {
     model.addIncome('full-time job', 32500);
-    expect(model.incomes.getByIndex(0).money).toEqual(32500);
+    expect(model.incomes.get()['income'].items[0].money).toEqual(32500);
   });
 
   it('should be able to add an expense without category', () => {
@@ -40,11 +40,11 @@ describe('Testing the Model', () => {
 
   it('should be able to edit an income by ID', () => {
     model.addIncome('full-time job', 32500);
-    const editID = model.incomes.getByIndex(0).getId();
+    const editID = model.incomes.get()['income'].items[0].getId();
     const newIncome = 42100;
 
     model.editIncome(editID, { money: newIncome });
-    expect(model.incomes.getByIndex(0).money).toEqual(newIncome);
+    expect(model.incomes.get()['income'].items[0].money).toEqual(newIncome);
   });
 
   it('should be able to rename an expense category by ID', () => {
