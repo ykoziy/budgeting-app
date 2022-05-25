@@ -38,10 +38,6 @@ class BudgetList {
     return this.items[category].items;
   }
 
-  getByCategoryIndex(category, index) {
-    return this.items[category].items[index];
-  }
-
   getCategoryByID(id) {
     let itemFound;
     for (const prop in this.items) {
