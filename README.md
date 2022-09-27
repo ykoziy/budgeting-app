@@ -1,6 +1,6 @@
 # Budgeting App
 
-Budgeting App (with ugly color pallet) allows you to store all of you expenses and income. Currently only expenses are shown on the graph. Still WIP. Project built just to practice using plain JS without any frameworks to build the web application. Just to appreciate how frameworks make the process of building web applications much simpler.
+Budgeting App (with ugly color palette) allows you to store all of you expenses and income. Currently only expenses are shown on the graph. Still WIP. Project built just to practice using plain JS without any frameworks to build the web application. Just to appreciate how frameworks make the process of building web applications much simpler.
 
 ## Technologies Used
 
