@@ -136,4 +136,56 @@ describe('Testing ExpenseList class', () => {
     expect(expenses.getCategoryByID(categoryID).category).toEqual('fun');
     expect(expenses.getCategoryByID(categoryID).id).toEqual(categoryID);
   });
+
+  it('should be able to change item category', () => {
+    const expenseA = new Expense('gas', 35.78);
+    const expenseB = new Expense('food', 560.1);
+
+    const expenseC = new Expense('ski lessons', 250.45);
+
+    const expenses = new ExpenseList();
+    expenses.add(expenseA);
+    expenses.add(expenseB);
+    expenses.add(expenseC, 'fun');
+
+    expenses.changeItemCategory('fun', expenseB.getId());
+
+    expect(expenses.get()['other'].items.length).toEqual(1);
+    expect(expenses.get()['fun'].items.length).toEqual(2);
+    expect(expenses.sum()).toEqual(846.33);
+  });
+
+  it('should be able to change item category to the default one, "other"', () => {
+    const expenseA = new Expense('gas', 35.78);
+    const expenseB = new Expense('food', 560.1);
+
+    const expenseC = new Expense('ski lessons', 250.45);
+
+    const expenses = new ExpenseList();
+    expenses.add(expenseA);
+    expenses.add(expenseB);
+    expenses.add(expenseC, 'fun');
+
+    expenses.changeItemCategory(undefined, expenseC.getId());
+
+    expect(expenses.get()['other'].items.length).toEqual(3);
+    expect(expenses.get()['fun'].items.length).toEqual(0);
+    expect(expenses.sum()).toEqual(846.33);
+  });
+
+  it('should not rename category with invalid ID', () => {
+    const expenseA = new Expense('gas', 35.78);
+    const expenseB = new Expense('food', 560.1);
+    const expenseC = new Expense('ski lessons', 250.45);
+
+    const expenses = new ExpenseList();
+    expenses.add(expenseA);
+    expenses.add(expenseB, 'not fun');
+    expenses.add(expenseC, 'fun');
+
+    let renameResult = expenses.renameCategory(12, 'super boring');
+
+    expect(renameResult).toEqual(false);
+    expect(expenses.get()['not fun'].items.length).toEqual(1);
+  });
 });

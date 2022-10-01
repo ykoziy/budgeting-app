@@ -30,8 +30,16 @@ describe('Testing the Model', () => {
     const editID = model.expenses.get()['utilities'].items[0].getId();
     const newCost = 63.45;
 
-    model.editExpense(editID, { money: 63.45 });
+    model.editExpense(editID, { money: newCost, description: 'aqua' });
+    expect(model.expenses.get()['utilities'].items[0].title).toEqual('aqua');
     expect(model.expenses.get()['utilities'].items[0].money).toEqual(newCost);
+  });
+
+  it('should not be able to edit an expense by  invalid ID', () => {
+    model.addExpense('water', 45.12, 'utilities');
+    model.editExpense(123454, { money: 63.45, description: 'aqua' });
+    expect(model.expenses.get()['utilities'].items[0].title).toEqual('water');
+    expect(model.expenses.get()['utilities'].items[0].money).toEqual(45.12);
   });
 
   it('should be able to edit an income by ID', () => {
