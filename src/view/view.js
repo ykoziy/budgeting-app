@@ -110,16 +110,7 @@ class View {
     });
   }
 
-  #attachDeleteCategoryHandler(node, eventHandler) {
-    node.addEventListener('click', (evt) => {
-      evt.stopPropagation();
-      const parent = evt.currentTarget.parentElement;
-      let categoryID = parent.dataset.categoryId;
-      eventHandler(categoryID);
-    });
-  }
-
-  #attachEditCategoryHandler(node, eventHandler) {
+  #attachCategoryHandler(node, eventHandler) {
     node.addEventListener('click', (evt) => {
       evt.stopPropagation();
       const parent = evt.currentTarget.parentElement;
@@ -171,8 +162,8 @@ class View {
       const deleteButton = this.#createDeleteItemButton();
       const editButton = this.#createEditItemButton();
 
-      this.#attachEditCategoryHandler(editButton, editItemHandler);
-      this.#attachDeleteCategoryHandler(deleteButton, deleteCategoryHandler);
+      this.#attachCategoryHandler(editButton, editItemHandler);
+      this.#attachCategoryHandler(deleteButton, deleteCategoryHandler);
 
       if (category === 'other') {
         listItem.append(deleteButton);
