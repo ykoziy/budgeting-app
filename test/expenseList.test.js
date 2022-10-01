@@ -13,11 +13,7 @@ describe('Testing ExpenseList class', () => {
   });
 
   it('sum of non existing category should be 0', () => {
-    const expenseA = new Expense('gas', 35.78);
-    const expenseB = new Expense('food', 560.1);
-
     const expenses = new ExpenseList();
-
     expect(expenses.sumCategory('fun')).toEqual(0);
   });
 
