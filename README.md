@@ -16,7 +16,7 @@ Budgeting App (with ugly color palette) allows you to store all of you expenses 
 - Almost MVC
 - Add/remove expenses and incomes with confirmation modal
 - Edit income/expense
-- Remove category
+- Remove/edit category
 - Categorize expenses
 - Show $ amount per category and item, also the total is shown
 
