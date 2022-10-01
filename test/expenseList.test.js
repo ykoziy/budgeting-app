@@ -17,21 +17,16 @@ describe('Testing ExpenseList class', () => {
     expect(expenses.sumCategory('fun')).toEqual(0);
   });
 
-  it('should return the sum of all expenses in category. Other (two expenses of total 595.88 ), fun (one expense of total 250.45)', () => {
+  it('should return the sum of all expenses in category. Other (two expenses of total 595.88 )', () => {
     const expenseA = new Expense('gas', 35.78);
     const expenseB = new Expense('food', 560.1);
-
-    const expenseC = new Expense('ski lessons', 250.45);
 
     const expenses = new ExpenseList();
     expenses.add(expenseA);
     expenses.add(expenseB);
-    expenses.add(expenseC, 'fun');
 
     expect(expenses.get()['other'].items.length).toEqual(2);
-    expect(expenses.get()['fun'].items.length).toEqual(1);
     expect(expenses.sumCategory('other')).toEqual(595.88);
-    expect(expenses.sumCategory('fun')).toEqual(250.45);
   });
 
   it('should return the sum of all expenses. Other (two expenses of total 595.88 ), fun (one expense of total 250.45)', () => {
