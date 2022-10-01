@@ -33,7 +33,7 @@ class PieChart {
         `max-width: 100%; height: auto; height: intrinsic; background-color: ${backgroundColor};`,
       );
 
-    var g = svg
+    const g = svg
       .append('g')
       .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
 
@@ -66,7 +66,7 @@ class PieChart {
       .style('stroke-width', '2px');
 
     //add label
-    var label = d3.arc().outerRadius(radius).innerRadius(0);
+    const label = d3.arc().outerRadius(radius).innerRadius(0);
 
     arc
       .append('text')
@@ -112,7 +112,9 @@ class PieChart {
       .style('font-size', `${labelHeight}px`);
   }
 
-  #showLegend(svg, radius) {}
+  #showLegend(svg, radius) {
+    console.log('show legend!');
+  }
 }
 
 export default PieChart;
