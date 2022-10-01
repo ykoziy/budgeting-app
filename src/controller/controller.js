@@ -52,7 +52,11 @@ class Controller {
   // Event handler for the expense nav button
   handleExpenseNav = () => {
     this.currentView = 'expense';
-    this.view.displayExpenses(this.model.expenses, this.handleDeleteCategory);
+    this.view.displayExpenses(
+      this.model.expenses,
+      this.handleDeleteCategory,
+      this.handleEditCategory,
+    );
     this.view.setCategoryOpen(this.handleCategoryOpen);
   };
 
@@ -86,6 +90,7 @@ class Controller {
 
   // Event handler for delete category button
   handleDeleteCategory = (categoryID) => {
+    console.log('delete category');
     this.view.displayModal('delete', undefined, undefined, undefined, () =>
       this.handleDeleteCategoryItem(categoryID),
     );

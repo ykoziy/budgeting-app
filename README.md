@@ -26,7 +26,6 @@ Budgeting App (with ugly color palette) allows you to store all of you expenses 
 
 ## TO DO
 
-- Add ability to edit category name
 - Add some sort of storage (LocalStorage might be enough for this project)
 - Add better design (that ugly color palette)
 - Think about making the graph more interactive?

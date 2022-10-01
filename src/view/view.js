@@ -170,10 +170,16 @@ class View {
       listItem.dataset.categoryId = expenses.getCategory(category).id;
       const deleteButton = this.#createDeleteItemButton();
       const editButton = this.#createEditItemButton();
+
       this.#attachEditCategoryHandler(editButton, editItemHandler);
       this.#attachDeleteCategoryHandler(deleteButton, deleteCategoryHandler);
 
-      listItem.append(editButton, deleteButton);
+      if (category === 'other') {
+        listItem.append(deleteButton);
+      } else {
+        listItem.append(editButton, deleteButton);
+      }
+
       this.budgetList.append(listItem);
     }
     this.#setFooter('Total Expenses:', expenses.sum());
